@@ -42,6 +42,9 @@ export default async function CaseStudyPage({ params }) {
         <div className="ap-standalone-header-inner">
           <div className="ap-standalone-brand">
             <a href="/#studi-kasus" className="ap-back-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="m15 18-6-6 6-6" />
+              </svg>
               Kembali ke Portofolio Utama
             </a>
             <span className="ap-standalone-author">
@@ -57,10 +60,12 @@ export default async function CaseStudyPage({ params }) {
       <main className="ap-standalone-main" aria-label={`Rincian Studi Kasus ${item.title}`}>
         <article className="ap-case-detail-view">
           <div className="ap-detail-header-block">
-            <div className="ap-case-meta" style={{ marginTop: 0, marginBottom: '4px' }}>
-              <span>{item.entity}</span>
+            <div className="ap-detail-meta-row">
+              <span className="ap-detail-entity-badge">{item.entity}</span>
               <span>&bull;</span>
               <span>{item.division || item.category}</span>
+              <span>&bull;</span>
+              <span className="ap-code-badge">{item.category}</span>
             </div>
             <h1 className="ap-detail-title">{item.title}</h1>
             <p className="ap-detail-subtitle">{item.subtitle}</p>
@@ -83,7 +88,9 @@ export default async function CaseStudyPage({ params }) {
               <span className="ap-step-num-badge">01</span>
               Masalah Bisnis &amp; Operasional
             </h2>
-            <p className="ap-prose">{item.problemStatement}</p>
+            <div className="ap-problem-callout">
+              <p style={{ margin: 0 }}>{item.problemStatement}</p>
+            </div>
           </section>
 
           {/* 02. Struktur Data Masuk */}
@@ -156,9 +163,15 @@ export default async function CaseStudyPage({ params }) {
             </div>
 
             {item.codeSnippet && (
-              <div style={{ marginTop: '8px' }}>
-                <div className="ap-meta-label" style={{ marginBottom: '6px' }}>
-                  Cuplikan Kode Inti: {item.codeSnippetTitle || 'Logika Utama'}
+              <div style={{ marginTop: '12px' }}>
+                <div className="ap-code-header-bar">
+                  <div className="ap-code-dots">
+                    <span className="ap-code-dot" style={{ backgroundColor: '#e06c75' }} />
+                    <span className="ap-code-dot" style={{ backgroundColor: '#e5c07b' }} />
+                    <span className="ap-code-dot" style={{ backgroundColor: '#98c379' }} />
+                  </div>
+                  <span>{item.codeSnippetTitle || 'Cuplikan Logika / Kode Otomasi'}</span>
+                  <span>{item.category && item.category.includes('Python') ? 'Python' : 'Script / Logic'}</span>
                 </div>
                 <pre className="ap-sys-code">
                   <code>{item.codeSnippet}</code>
@@ -218,22 +231,36 @@ export default async function CaseStudyPage({ params }) {
             <div>
               {prevItem ? (
                 <a href={`/kasus/${prevItem.id}`} className="ap-back-btn">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="m15 18-6-6 6-6" />
+                  </svg>
                   Sebelumnya: {prevItem.title}
                 </a>
               ) : (
                 <a href="/#studi-kasus" className="ap-back-btn">
-                  Kembali ke Daftar Studi Kasus
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="m15 18-6-6 6-6" />
+                  </svg>
+                  Kembali ke Portofolio
                 </a>
               )}
             </div>
+
+            <a href="/#studi-kasus" className="ap-back-btn ap-back-home-center">
+              Daftar Semua Projek &amp; Arsitektur
+            </a>
+
             <div>
               {nextItem ? (
                 <a href={`/kasus/${nextItem.id}`} className="ap-back-btn">
                   Selanjutnya: {nextItem.title}
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
                 </a>
               ) : (
                 <a href="/#studi-kasus" className="ap-back-btn">
-                  Kembali ke Daftar Studi Kasus
+                  Kembali ke Portofolio
                 </a>
               )}
             </div>

@@ -5,7 +5,7 @@ import { ALL_CASES, PROFILE_DATA } from '../lib/pythonSystemsData';
 
 const NAV_ITEMS = [
   { id: 'ringkasan', label: 'Ringkasan' },
-  { id: 'studi-kasus', label: 'Studi Kasus' },
+  { id: 'studi-kasus', label: 'Projek & Arsitektur Sistem' },
   { id: 'keahlian', label: 'Keahlian & Tools' },
   { id: 'cv', label: 'Pengalaman & Pendidikan' },
 ];
@@ -145,6 +145,7 @@ function SectionNav({ activeSection, onNavigate }) {
 
 function CaseRow({ item }) {
   const caseHref = `/kasus/${item.id}`;
+  const badgeLabel = item.groupType === 'python' ? 'Pipeline ETL Python' : 'Sistem Web & Analitik';
 
   return (
     <article className="ap-case-row">
@@ -153,24 +154,28 @@ function CaseRow({ item }) {
           <h3>
             <a
               href={caseHref}
-              target="_blank"
-              rel="noopener noreferrer"
               className="ap-case-title-btn"
             >
               {item.title}
             </a>
           </h3>
           <div className="ap-case-meta">
-            <span>{item.entity}</span>
+            <span className="ap-code-badge" style={{ fontSize: '11px', padding: '2px 8px' }}>
+              {badgeLabel}
+            </span>
             <span>&bull;</span>
-            <span>{item.division || item.category}</span>
+            <strong>{item.entity}</strong>
+            {item.division && (
+              <>
+                <span>&bull;</span>
+                <span>{item.division}</span>
+              </>
+            )}
           </div>
         </div>
 
         <a
           href={caseHref}
-          target="_blank"
-          rel="noopener noreferrer"
           className="ap-open-case-btn"
         >
           Lihat alur &amp; rumus
@@ -244,9 +249,6 @@ export default function PortfolioHub() {
     }
   };
 
-  const pythonCases = ALL_CASES.filter((c) => c.groupType === 'python');
-  const webCases = ALL_CASES.filter((c) => c.groupType === 'web');
-
   return (
     <div className="ap-shell">
       <div className="ap-frame">
@@ -267,85 +269,33 @@ export default function PortfolioHub() {
                 </span>
               </div>
 
-              <div className="ap-summary-grid">
-                <div className="ap-summary-main">
-                  <p className="ap-prose">
-                    Saya <strong>Rofiq Samanhudi</strong>, lulusan S1 Informatika (Peminatan Data Science) Universitas Muhammadiyah Malang dengan IPK <strong>3,82 / 4,00</strong>. Saya berfokus pada <strong>Data Engineering</strong> dan <strong>Data Analytics</strong> untuk menyelesaikan tantangan operasional riil, menjembatani data mentah menjadi keputusan bisnis yang presisi.
-                  </p>
-                  <p className="ap-prose">
-                    Melalui pengalaman kerja dan magang di <strong>PT. Kilap Global Group &amp; PT Kilapkan Seluruh Bangsa</strong>, saya membangun skrip otomasi <strong>Python (Pandas, NumPy, OpenPyXL)</strong>, query basis data <strong>SQL</strong>, serta model kalkulasi <strong>Cost Control Produksi (Analisis Biaya Material &amp; HPP)</strong> untuk mengeliminasi rekapitulasi manual yang rawan diskrepansi. Saya juga merancang dashboard interaktif <strong>Looker Studio</strong> untuk divisi B2B dan Finance, mengembangkan tools web internal berbasis <strong>Next.js</strong>, serta mengeksekusi analisis performa berkala (weekly, monthly, dan kuartalan) lintas divisi bersama tim R&amp;D, Host Live, dan Data.
-                  </p>
-                </div>
-
-                <div className="ap-summary-cards">
-                  <div className="ap-summary-card">
-                    <span className="ap-summary-card-num">01</span>
-                    <div>
-                      <h3 className="ap-summary-card-title">Otomasi Pipeline ETL &amp; Rekonsiliasi</h3>
-                      <p className="ap-summary-card-desc">
-                        Standardisasi data multi-channel marketplace, generator XML DJP CoreTax, audit stok gudang fisik vs sistem, serta integrasi spreadsheet terstruktur.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="ap-summary-card">
-                    <span className="ap-summary-card-num">02</span>
-                    <div>
-                      <h3 className="ap-summary-card-title">Cost Control &amp; Biaya Produksi</h3>
-                      <p className="ap-summary-card-desc">
-                        Pengendalian biaya dan estimasi kebutuhan komponen kemasan (botol, tutup, stiker, kardus) serta formula cairan dengan presisi standar keuangan pabrik.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="ap-summary-card">
-                    <span className="ap-summary-card-num">03</span>
-                    <div>
-                      <h3 className="ap-summary-card-title">Analitik Bisnis &amp; Evaluasi Lintas Tim</h3>
-                      <p className="ap-summary-card-desc">
-                        Dashboard Looker Studio (Finance &amp; B2B) dan penyusunan insight rutin mingguan, bulanan, serta kuartalan untuk tim R&amp;D, Host Live, dan Data.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+              <div className="ap-summary-main">
+                <p className="ap-prose">
+                  Saya <strong>Rofiq Samanhudi</strong>, lulusan S1 Informatika (Peminatan Data Science) Universitas Muhammadiyah Malang dengan IPK <strong>3,82 / 4,00</strong>. Saya berfokus pada <strong>Data Engineering</strong> dan <strong>Data Analytics</strong> untuk menyelesaikan tantangan operasional riil, menjembatani data mentah menjadi keputusan bisnis yang presisi.
+                </p>
+                <p className="ap-prose">
+                  Melalui pengalaman kerja dan magang di <strong>PT. Kilap Global Group &amp; PT Kilapkan Seluruh Bangsa</strong>, saya membangun skrip otomasi <strong>Python (Pandas, NumPy, OpenPyXL)</strong>, query basis data <strong>SQL</strong>, serta model kalkulasi <strong>Cost Control Produksi (Analisis Biaya Material &amp; HPP)</strong> untuk mengeliminasi rekapitulasi manual yang rawan diskrepansi. Saya juga merancang dashboard interaktif <strong>Looker Studio</strong> untuk divisi B2B dan Finance, mengembangkan tools web internal berbasis <strong>Next.js</strong>, serta mengeksekusi analisis performa berkala (weekly, monthly, dan kuartalan) lintas divisi bersama tim R&amp;D, Host Live, dan Data.
+                </p>
               </div>
             </section>
 
-            {/* 2. STUDI KASUS */}
+            {/* 2. PROJEK & ARSITEKTUR SISTEM */}
             <section id="studi-kasus" className="ap-section" aria-labelledby="heading-studi-kasus">
               <div className="ap-section-header">
                 <div>
                   <h2 id="heading-studi-kasus" className="ap-section-title">
-                    Studi Kasus &amp; Arsitektur Sistem
+                    Projek dan Arsitektur Sistem
                   </h2>
                   <span className="ap-section-subtitle">
-                    Pilih judul proyek atau tombol Lihat alur &amp; rumus untuk membuka rincian teknis di tab baru
+                    Pilih judul proyek atau tombol Lihat alur &amp; rumus untuk membuka rincian alur kerja, rumus, dan struktur data
                   </span>
                 </div>
               </div>
 
-              <div>
-                <div className="ap-group-subheading">
-                  <span>Pipeline ETL &amp; Otomasi Operasional Python</span>
-                  <span>5 Studi Kasus</span>
-                </div>
-                <div className="ap-case-list">
-                  {pythonCases.map((item) => (
-                    <CaseRow key={item.id} item={item} />
-                  ))}
-                </div>
-              </div>
-
-              <div style={{ marginTop: '8px' }}>
-                <div className="ap-group-subheading">
-                  <span>Sistem Internal &amp; Kalkulator Web (Next.js)</span>
-                  <span>5 Studi Kasus</span>
-                </div>
-                <div className="ap-case-list">
-                  {webCases.map((item) => (
-                    <CaseRow key={item.id} item={item} />
-                  ))}
-                </div>
+              <div className="ap-case-list">
+                {ALL_CASES.map((item) => (
+                  <CaseRow key={item.id} item={item} />
+                ))}
               </div>
             </section>
 
