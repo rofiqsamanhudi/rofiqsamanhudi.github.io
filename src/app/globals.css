@@ -1,0 +1,1199 @@
+/* ==========================================================================
+   PORTOFOLIO ROFIQ SAMANHUDI - FOREST & BRASS DESIGN SYSTEM
+   Palet: #0B0F0D, #1F2A1F, #3E5A3F, #8CA98C, #D9C7A3, #B08D57
+   Kontras Terukur WCAG AA/AAA, Tabular-Nums, AcademicPages 2-Column Shell
+   ========================================================================== */
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+
+  /* Token Palet Forest & Brass */
+  --bg: #0B0F0D;
+  --surface: #1F2A1F;
+  --line: #3E5A3F;
+  --text: #D9C7A3;
+  --text-2: #8CA98C;
+  --accent: #B08D57;
+  --accent-ink: #0B0F0D;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Base-layer interaction affordances (R-39) */
+a[href],
+button:not(:disabled),
+summary,
+select:not(:disabled),
+label[for],
+[role="button"]:not([aria-disabled="true"]),
+[role="tab"]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+button:disabled,
+select:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+/* High-contrast focus indicator (R-32: #D9C7A3 on #0B0F0D is 11.62:1) */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+[role="tab"]:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-2);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) var(--bg);
+}
+
+/* ==========================================================================
+   2-COLUMN VIEWPORT-LOCKED SHELL (AcademicPages Architecture)
+   ========================================================================== */
+.ap-shell {
+  background-color: var(--bg);
+  color: var(--text);
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  font-family: var(--font-sans);
+}
+
+.ap-frame {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   LEFT PROFILE SIDEBAR (Stationary on Desktop)
+   ========================================================================== */
+.ap-sidebar-fixed {
+  height: 100%;
+  background-color: var(--surface);
+  border-right: 1px solid var(--line);
+  padding: 24px 22px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.ap-sidebar-top {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ap-avatar-circle-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.ap-avatar-circle {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 0 3px rgba(176, 141, 87, 0.15);
+  background-color: var(--bg);
+  padding: 2px;
+  display: block;
+}
+
+.ap-sidebar-header-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.ap-sidebar-name {
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.25;
+}
+
+.ap-sidebar-role {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.ap-sidebar-bio {
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.ap-sidebar-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 12px;
+}
+
+.ap-sidebar-link-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.ap-sidebar-link-item:hover {
+  background-color: var(--bg);
+  color: var(--accent);
+}
+
+.ap-sidebar-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.ap-sidebar-link-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ap-sidebar-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.ap-sidebar-skill-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background-color: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--text-2);
+}
+
+.ap-sidebar-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+/* Primary CTA Button: Brass Fill (#B08D57) with Dark Forest Text (#0B0F0D = 6.24:1) */
+.ap-btn-primary {
+  min-height: 42px;
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 6px;
+  background-color: var(--accent);
+  color: var(--accent-ink);
+  border: 1px solid var(--accent);
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.ap-btn-primary:hover {
+  background-color: var(--text);
+  border-color: var(--text);
+}
+
+.ap-btn-primary:active {
+  transform: translateY(1px);
+}
+
+/* ==========================================================================
+   RIGHT WORKSPACE: Stationary Section Nav + Scrollable Body + Footer
+   ========================================================================== */
+.ap-workspace {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--bg);
+  min-width: 0;
+}
+
+.ap-workspace-header {
+  flex-shrink: 0;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--line);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 54px;
+}
+
+.ap-section-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  width: 100%;
+}
+
+.ap-nav-link {
+  min-height: 52px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  background: transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.ap-nav-link:hover {
+  color: var(--text);
+}
+
+.ap-nav-link.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ONLY THIS INNER CONTAINER SCROLLS */
+.ap-workspace-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 36px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  scroll-behavior: smooth;
+}
+
+.ap-workspace-footer {
+  flex-shrink: 0;
+  background-color: var(--surface);
+  border-top: 1px solid var(--line);
+  padding: 10px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+/* ==========================================================================
+   SECTIONS & EDITORIAL TYPOGRAPHY
+   ========================================================================== */
+.ap-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-margin-top: 20px;
+}
+
+.ap-section-header {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ap-section-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.ap-section-subtitle {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.ap-prose {
+  font-size: 14.5px;
+  color: var(--text);
+  line-height: 1.7;
+  max-width: 78ch;
+}
+
+.ap-prose-muted {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.65;
+  max-width: 78ch;
+}
+
+/* Summary Grid for #ringkasan */
+.ap-summary-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.ap-summary-main {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ap-summary-main .ap-prose {
+  max-width: none;
+}
+
+.ap-summary-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ap-summary-card {
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 14px 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  transition: border-color 0.15s ease;
+}
+
+.ap-summary-card:hover {
+  border-color: var(--accent);
+}
+
+.ap-summary-card-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background-color: var(--bg);
+  color: var(--accent);
+  border: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.ap-summary-card-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 4px;
+  line-height: 1.35;
+}
+
+.ap-summary-card-desc {
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.55;
+}
+
+/* Filter Tabs for Case Studies */
+.ap-filter-bar {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ap-tab-btn {
+  min-height: 34px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background-color: var(--surface);
+  color: var(--text-2);
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.ap-tab-btn:hover {
+  color: var(--text);
+  border-color: var(--text-2);
+}
+
+.ap-tab-btn.active {
+  background-color: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+
+/* ==========================================================================
+   ACADEMIC CASE STUDY LIST (Flat Rows)
+   ========================================================================== */
+.ap-group-subheading {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-2);
+  padding-top: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ap-case-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.ap-case-row {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ap-case-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.ap-case-title-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.35;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line);
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.ap-case-title-btn:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+.ap-case-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--text-2);
+  margin-top: 4px;
+}
+
+.ap-code-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background-color: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+}
+
+.ap-file-code {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  background-color: var(--surface);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+  color: var(--text-2);
+}
+
+.ap-case-problem {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+  max-width: 82ch;
+}
+
+.ap-case-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.ap-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ap-tag {
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background-color: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.ap-open-case-btn {
+  min-height: 34px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  background-color: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.ap-open-case-btn:hover {
+  background-color: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+
+/* ==========================================================================
+   STANDALONE CASE STUDY PAGE (/kasus/[id]) & DETAIL PANEL
+   ========================================================================== */
+.ap-standalone-shell {
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-sans);
+}
+
+.ap-standalone-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 24px;
+}
+
+.ap-standalone-header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.ap-standalone-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.ap-standalone-author {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.ap-standalone-main {
+  flex: 1;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 28px 24px 48px;
+}
+
+.ap-standalone-pager {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.ap-standalone-footer {
+  background-color: var(--surface);
+  border-top: 1px solid var(--line);
+  padding: 14px 24px;
+}
+
+.ap-standalone-footer-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.ap-case-detail-view {
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ap-detail-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.ap-back-btn {
+  min-height: 36px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  background-color: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--line);
+  font-size: 12.5px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.ap-back-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.ap-detail-header-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ap-detail-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.ap-detail-subtitle {
+  font-size: 13.5px;
+  color: var(--text-2);
+}
+
+.ap-sys-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.ap-sys-metric-box {
+  background-color: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ap-meta-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.ap-sys-metric-val {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.ap-detail-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ap-detail-block-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ap-step-num-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: var(--bg);
+  color: var(--accent);
+  border: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+/* Step Cards without decorative left stripes (R-01, R-31) */
+.ap-sys-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ap-sys-step-card {
+  background-color: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ap-sys-step-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.ap-sys-step-body {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+.ap-sys-formula {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background-color: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line);
+  overflow-x: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.ap-sys-code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  padding: 16px;
+  border-radius: 6px;
+  background-color: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--line);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Data Tables */
+.ap-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.ap-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  background-color: var(--bg);
+}
+
+.ap-table th {
+  background-color: var(--surface);
+  color: var(--text);
+  font-weight: 800;
+  text-align: left;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.ap-table td {
+  padding: 8px 12px;
+  color: var(--text-2);
+  border-bottom: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+}
+
+.ap-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ==========================================================================
+   ANALYSIS SAMPLES SECTION (Question-Driven Charts + Findings)
+   ========================================================================== */
+.ap-analysis-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ap-analysis-card {
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ap-analysis-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ap-analysis-question {
+  font-size: 15.5px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.4;
+  max-width: 72ch;
+}
+
+.ap-sim-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background-color: var(--bg);
+  color: var(--text-2);
+  border: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.ap-chart-box {
+  background-color: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ap-chart-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 11.5px;
+  color: var(--text-2);
+}
+
+.ap-chart-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ap-chart-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ap-chart-row-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 12.5px;
+}
+
+.ap-chart-item-name {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.ap-chart-item-val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.ap-chart-track {
+  width: 100%;
+  height: 12px;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Non-text contrast >= 3:1 against #1F2A1F track:
+   #B08D57 on #1F2A1F is 4.82:1; #8CA98C on #1F2A1F is 5.80:1 */
+.ap-chart-fill {
+  height: 100%;
+  background-color: var(--text-2);
+  border-radius: 2px;
+}
+
+.ap-chart-fill.highlight {
+  background-color: var(--accent);
+}
+
+.ap-chart-sub {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11.5px;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.ap-bullet-list {
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   SKILLS & CV SECTIONS
+   ========================================================================== */
+.ap-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.ap-skill-group-card {
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ap-skill-group-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--text);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS (<860px Mobile & Tablet) & REDUCED MOTION
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .ap-skills-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  .ap-shell {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .ap-frame {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow: visible;
+  }
+
+  .ap-sidebar-fixed {
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    padding: 20px 18px;
+  }
+
+  .ap-workspace {
+    height: auto;
+    overflow: visible;
+  }
+
+  .ap-workspace-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    padding: 0 16px;
+  }
+
+  .ap-nav-link,
+  .ap-tab-btn,
+  .ap-open-case-btn,
+  .ap-back-btn,
+  .ap-btn-primary {
+    min-height: 44px;
+  }
+
+  .ap-workspace-scroll {
+    overflow: visible;
+    padding: 22px 18px 36px;
+  }
+
+  .ap-workspace-footer {
+    padding: 14px 18px;
+  }
+
+  .ap-sys-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .ap-case-row-top {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ap-case-detail-view {
+    padding: 18px 16px;
+  }
+
+  .ap-summary-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
