@@ -16,8 +16,8 @@ function ProfileSidebar() {
       <div className="ap-sidebar-top">
         <div className="ap-avatar-circle-wrap">
           <img
-            src={PROFILE_DATA.photos.formal}
-            alt="Foto formal Rofiq Samanhudi"
+            src={PROFILE_DATA.photos.profile}
+            alt="Foto profil Rofiq Samanhudi"
             width="130"
             height="130"
             fetchPriority="high"

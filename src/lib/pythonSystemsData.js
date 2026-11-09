@@ -841,6 +841,7 @@ export const PROFILE_DATA = {
   photos: {
     casual: '/profile/foto-casual.jpeg',
     formal: '/profile/foto-formal.jpg',
+    profile: '/profile/foto-profil.jpg',
     landscape: '/profile/foto-bromo.jpeg',
   },
   summary:

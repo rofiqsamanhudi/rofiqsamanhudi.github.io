@@ -144,7 +144,7 @@ button:focus-visible,
   height: 130px;
   border-radius: 50%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
   border: 2px solid var(--accent);
   box-shadow: 0 0 0 3px rgba(176, 141, 87, 0.15);
   background-color: var(--bg);
