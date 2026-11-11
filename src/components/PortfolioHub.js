@@ -28,11 +28,15 @@ export default function PortfolioHub() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
+      if (scrollY < 80) {
+        setActiveSection('home');
+        return;
+      }
       const sections = NAV_LINKS.map((item) => document.getElementById(item.id)).filter(Boolean);
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const sec = sections[i];
-        if (sec.offsetTop - 200 <= scrollY) {
+        if (sec.offsetTop - 120 <= scrollY) {
           setActiveSection(sec.id);
           break;
         }
@@ -54,11 +58,19 @@ export default function PortfolioHub() {
     }
   };
 
+  // Alternating section tone:
+  // tone-alt: white sections ('about', 'experience', 'contact') -> navbar adapts to soft slate #f4f4f6
+  // tone-default: off-white sections ('home', 'projects', 'skills') -> navbar adapts to pure white #ffffff
+  const isWhiteSection = ['about', 'experience', 'contact'].includes(activeSection);
+
   return (
     <div className="mn-shell">
-      {/* FLOATING CENTER PILL NAVBAR */}
+      {/* FLOATING CENTER PILL NAVBAR (WITH DYNAMIC ALTERNATING BACKGROUND) */}
       <header className="mn-nav-wrapper">
-        <nav className="mn-nav-pill" aria-label="Main Navigation">
+        <nav
+          className={`mn-nav-pill ${isWhiteSection ? 'mn-nav-pill-alt' : 'mn-nav-pill-default'}`}
+          aria-label="Main Navigation"
+        >
           <a
             href="#home"
             onClick={(e) => scrollToSection(e, 'home')}
