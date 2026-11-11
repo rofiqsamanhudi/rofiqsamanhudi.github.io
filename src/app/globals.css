@@ -114,17 +114,21 @@ button:focus-visible,
 }
 
 /* ==========================================================================
-   FLOATING CENTER PILL NAVBAR (TRANSLUCENT FROSTED GLASS CAPSULE)
+   FLOATING CENTER PILL NAVBAR (BORDERLESS TRANSLUCENT FROSTED GLASS CAPSULE)
    ========================================================================== */
 .mn-nav-wrapper {
   position: fixed;
   top: 20px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate3d(-50%, 0, 0);
+  -webkit-transform: translate3d(-50%, 0, 0);
   z-index: 999;
   width: auto;
   max-width: calc(100% - 32px);
   pointer-events: none;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .mn-nav-pill {
@@ -132,34 +136,35 @@ button:focus-visible,
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 14px;
-  backdrop-filter: blur(28px) saturate(190%) contrast(92%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%) contrast(92%);
+  gap: 12px;
+  border: none;
+  outline: none;
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   border-radius: 9999px;
   padding: 5px 6px 5px 18px;
-  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform, background-color;
+  contain: paint;
 }
 
-/* Tone 1 (#f8f8f8 canvas): translucent crystal glass pill */
+.mn-nav-pill:hover {
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.08), 0 3px 10px rgba(0, 0, 0, 0.03);
+}
+
+/* Tone 1 (#f8f8f8 canvas): seamless borderless frosted glass */
 .mn-nav-pill-default {
-  background: rgba(255, 255, 255, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08),
-              0 2px 6px rgba(0, 0, 0, 0.03),
-              inset 0 1px 1.5px rgba(255, 255, 255, 0.9),
-              inset 0 -1px 1px rgba(0, 0, 0, 0.03);
+  background: rgba(255, 255, 255, 0.65);
+  border: none;
 }
 
-/* Tone 2 (#ffffff section): soft tinted crystal glass pill */
+/* Tone 2 (#ffffff section): seamless borderless soft-tinted glass */
 .mn-nav-pill-alt {
-  background: rgba(236, 236, 242, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.09),
-              0 2px 6px rgba(0, 0, 0, 0.04),
-              inset 0 1px 1.5px rgba(255, 255, 255, 0.95),
-              inset 0 -1px 1px rgba(0, 0, 0, 0.04);
+  background: rgba(244, 244, 248, 0.72);
+  border: none;
 }
 
 .mn-nav-brand {
@@ -168,6 +173,16 @@ button:focus-visible,
   align-items: baseline;
   line-height: 1;
   padding-right: 4px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.mn-nav-brand:hover {
+  transform: scale(1.06);
+}
+
+.mn-nav-brand:active {
+  transform: scale(0.96);
 }
 
 .mn-brand-luxury {
@@ -183,6 +198,12 @@ button:focus-visible,
   color: var(--accent-green);
   font-weight: 900;
   font-size: 15px;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.mn-nav-brand:hover .mn-brand-dot {
+  transform: scale(1.3);
 }
 
 .mn-nav-links {
@@ -204,23 +225,29 @@ button:focus-visible,
   text-decoration: none;
   border-radius: 9999px;
   letter-spacing: 0.1px;
-  transition: all 0.2s ease;
+  transition: color 0.15s ease, background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .mn-nav-link:hover {
   color: var(--text);
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.7);
+  transform: translateY(-1px);
 }
 
-/* Solid opaque white pill for the active tab (as in reference image) */
+.mn-nav-link:active {
+  transform: scale(0.95);
+}
+
+/* Solid opaque white pill for the active tab (interactive & crisp) */
 .mn-nav-link.active,
 .mn-nav-pill-default .mn-nav-link.active,
 .mn-nav-pill-alt .mn-nav-link.active {
   color: #111111;
   background-color: #ffffff;
   font-weight: 700;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  border: none;
+  transform: none;
 }
 
 .mn-nav-action {
@@ -242,20 +269,30 @@ button:focus-visible,
   text-decoration: none;
   border-radius: 9999px;
   letter-spacing: 0.1px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-  transition: all 0.2s ease;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+  transition: background-color 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
 }
 
 .mn-btn-resume svg {
   width: 12px;
   height: 12px;
+  transition: transform 0.2s ease;
 }
 
 .mn-btn-resume:hover {
   background-color: #27272a;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transform: translateY(-1.5px) scale(1.02);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.24);
+}
+
+.mn-btn-resume:hover svg {
+  transform: translateY(1px);
+}
+
+.mn-btn-resume:active {
+  transform: scale(0.96);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
 }
 
 .mn-mobile-toggle {
@@ -265,6 +302,12 @@ button:focus-visible,
   padding: 6px;
   color: var(--text);
   cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 0.15s ease;
+}
+
+.mn-mobile-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 .mn-mobile-dropdown {
@@ -299,10 +342,10 @@ button:focus-visible,
     flex-direction: column;
     gap: 4px;
     margin-top: 8px;
-    background: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(28px) saturate(180%);
     -webkit-backdrop-filter: blur(28px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    border: none;
     border-radius: 16px;
     padding: 10px;
     box-shadow: 0 14px 40px rgba(0, 0, 0, 0.1);
@@ -314,10 +357,11 @@ button:focus-visible,
     color: var(--text-2);
     text-decoration: none;
     border-radius: 8px;
+    transition: background-color 0.15s ease, color 0.15s ease;
   }
   .mn-mobile-link.active,
   .mn-mobile-link:hover {
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.8);
     color: var(--text);
   }
 }
