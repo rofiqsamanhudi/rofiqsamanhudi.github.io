@@ -1,411 +1,682 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { ALL_CASES, PROFILE_DATA } from '../lib/pythonSystemsData';
+import React, { useState, useEffect } from 'react';
+import { ALL_CASES, PYTHON_SYSTEMS, WEB_SYSTEMS, PROFILE_DATA } from '../lib/pythonSystemsData';
 
-const NAV_ITEMS = [
-  { id: 'ringkasan', label: 'Ringkasan' },
-  { id: 'studi-kasus', label: 'Projek & Arsitektur Sistem' },
-  { id: 'keahlian', label: 'Keahlian & Tools' },
-  { id: 'cv', label: 'Pengalaman & Pendidikan' },
+const NAV_LINKS = [
+  { id: 'home', label: 'Home' },
+  { id: 'about', label: 'About' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'contact', label: 'Contact' },
 ];
 
-function ProfileSidebar() {
-  return (
-    <aside className="ap-sidebar-fixed" aria-label="Profil dan Kontak Rofiq Samanhudi">
-      <div className="ap-sidebar-top">
-        <div className="ap-avatar-circle-wrap">
-          <img
-            src={PROFILE_DATA.photos.profile}
-            alt="Foto profil Rofiq Samanhudi"
-            width="130"
-            height="130"
-            fetchPriority="high"
-            className="ap-avatar-circle"
-          />
-        </div>
-
-        <div className="ap-sidebar-header-info">
-          <h1 className="ap-sidebar-name">{PROFILE_DATA.name}</h1>
-          <div className="ap-sidebar-role">{PROFILE_DATA.role}</div>
-        </div>
-
-        <p className="ap-sidebar-bio">
-          Data Engineer &amp; Analyst yang berfokus pada otomasi pipeline ETL Python, sistem cost control produksi manufaktur, serta dashboard analitik operasional untuk industri e-commerce.
-        </p>
-
-        <ul className="ap-sidebar-links" aria-label="Daftar Kontak">
-          <li>
-            <div className="ap-sidebar-link-item" title="Domisili">
-              <svg className="ap-sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
-              <span className="ap-sidebar-link-text">Malang, Jawa Timur, Indonesia</span>
-            </div>
-          </li>
-          <li>
-            <a href={`mailto:${PROFILE_DATA.email}`} className="ap-sidebar-link-item" title="Kirim Email">
-              <svg className="ap-sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <rect width="20" height="16" x="2" y="4" rx="2" />
-                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-              </svg>
-              <span className="ap-sidebar-link-text">{PROFILE_DATA.email}</span>
-            </a>
-          </li>
-          <li>
-            <a href={PROFILE_DATA.whatsappUrl} target="_blank" rel="noopener noreferrer" className="ap-sidebar-link-item" title="Chat WhatsApp">
-              <svg className="ap-sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-              </svg>
-              <span className="ap-sidebar-link-text">{PROFILE_DATA.phoneDisplay}</span>
-            </a>
-          </li>
-          <li>
-            <a href={PROFILE_DATA.linkedinUrl} target="_blank" rel="noopener noreferrer" className="ap-sidebar-link-item" title="Profil LinkedIn">
-              <svg className="ap-sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                <rect width="4" height="12" x="2" y="9" />
-                <circle cx="4" cy="4" r="2" />
-              </svg>
-              <span className="ap-sidebar-link-text">in/rofiqsamanhudi</span>
-            </a>
-          </li>
-          <li>
-            <a href={PROFILE_DATA.githubUrl} target="_blank" rel="noopener noreferrer" className="ap-sidebar-link-item" title="Profil GitHub">
-              <svg className="ap-sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                <path d="M9 18c-4.51 2-5-2-7-2" />
-              </svg>
-              <span className="ap-sidebar-link-text">github.com/rofiqsamanhudi</span>
-            </a>
-          </li>
-          <li>
-            <a href={PROFILE_DATA.instagramUrl} target="_blank" rel="noopener noreferrer" className="ap-sidebar-link-item" title="Profil Instagram">
-              <svg className="ap-sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-              </svg>
-              <span className="ap-sidebar-link-text">{PROFILE_DATA.instagramHandle}</span>
-            </a>
-          </li>
-        </ul>
-
-        <div className="ap-sidebar-skills" aria-label="Keahlian Inti">
-          <span className="ap-sidebar-skill-tag">Cost Control</span>
-          <span className="ap-sidebar-skill-tag">Python (ETL)</span>
-          <span className="ap-sidebar-skill-tag">SQL</span>
-          <span className="ap-sidebar-skill-tag">Looker Studio</span>
-          <span className="ap-sidebar-skill-tag">Next.js</span>
-        </div>
-      </div>
-
-      <div className="ap-sidebar-bottom">
-        <a
-          href={PROFILE_DATA.cvPdfUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="ap-btn-primary"
-        >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-            <polyline points="7 10 12 15 17 10" />
-            <line x1="12" x2="12" y1="15" y2="3" />
-          </svg>
-          Unduh CV (PDF)
-        </a>
-      </div>
-    </aside>
-  );
-}
-
-function SectionNav({ activeSection, onNavigate }) {
-  return (
-    <header className="ap-workspace-header">
-      <nav className="ap-section-nav" aria-label="Navigasi Bagian Portofolio">
-        {NAV_ITEMS.map((item) => {
-          const isActive = activeSection === item.id;
-          return (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              onClick={(e) => onNavigate(e, item.id)}
-              className={`ap-nav-link ${isActive ? 'active' : ''}`}
-              aria-current={isActive ? 'location' : undefined}
-            >
-              {item.label}
-            </a>
-          );
-        })}
-      </nav>
-    </header>
-  );
-}
-
-function CaseRow({ item }) {
-  const caseHref = `/kasus/${item.id}`;
-  const badgeLabel = item.groupType === 'python' ? 'Pipeline ETL Python' : 'Sistem Web & Analitik';
-
-  return (
-    <article className="ap-case-row">
-      <div className="ap-case-row-top">
-        <div>
-          <h3>
-            <a
-              href={caseHref}
-              className="ap-case-title-btn"
-            >
-              {item.title}
-            </a>
-          </h3>
-          <div className="ap-case-meta">
-            <span className="ap-code-badge" style={{ fontSize: '11px', padding: '2px 8px' }}>
-              {badgeLabel}
-            </span>
-            <span>&bull;</span>
-            <strong>{item.entity}</strong>
-            {item.division && (
-              <>
-                <span>&bull;</span>
-                <span>{item.division}</span>
-              </>
-            )}
-          </div>
-        </div>
-
-        <a
-          href={caseHref}
-          className="ap-open-case-btn"
-        >
-          Lihat alur &amp; rumus
-        </a>
-      </div>
-
-      <p className="ap-case-problem">{item.problemStatement}</p>
-
-      <div className="ap-case-footer">
-        <div className="ap-tag-row">
-          {item.stack.map((stk) => (
-            <span key={stk} className="ap-tag">
-              {stk}
-            </span>
-          ))}
-        </div>
-      </div>
-    </article>
-  );
-}
-
 export default function PortfolioHub() {
-  const [activeSection, setActiveSection] = useState('ringkasan');
-  const scrollContainerRef = useRef(null);
+  const [activeSection, setActiveSection] = useState('home');
+  const [projectFilter, setProjectFilter] = useState('all');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Sync URL hash (#<section>) on load and hashchange
+  // Filter projects by category: all, python, web
+  const filteredProjects = ALL_CASES.filter((p) => {
+    if (projectFilter === 'python') return p.groupType === 'python';
+    if (projectFilter === 'web') return p.groupType === 'web';
+    return true;
+  });
+
+  // Scroll spy to highlight active nav link
   useEffect(() => {
-    const applyHash = () => {
-      const rawHash = window.location.hash.replace(/^#/, '');
-      if (NAV_ITEMS.some((n) => n.id === rawHash)) {
-        setActiveSection(rawHash);
-      }
-    };
-
-    applyHash();
-    window.addEventListener('hashchange', applyHash);
-    return () => window.removeEventListener('hashchange', applyHash);
-  }, []);
-
-  // Scroll-spy for section navigation inside .ap-workspace-scroll
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return undefined;
-
     const handleScroll = () => {
-      const containerRect = container.getBoundingClientRect();
-      let currentId = 'ringkasan';
-      for (const item of NAV_ITEMS) {
-        const sectionEl = document.getElementById(item.id);
-        if (sectionEl) {
-          const rect = sectionEl.getBoundingClientRect();
-          if (rect.top - containerRect.top <= 120) {
-            currentId = item.id;
-          }
+      const scrollY = window.scrollY;
+      const sections = NAV_LINKS.map((item) => document.getElementById(item.id)).filter(Boolean);
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const sec = sections[i];
+        if (sec.offsetTop - 200 <= scrollY) {
+          setActiveSection(sec.id);
+          break;
         }
       }
-      setActiveSection(currentId);
     };
 
-    container.addEventListener('scroll', handleScroll, { passive: true });
-    return () => container.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavigate = (e, sectionId) => {
+  const scrollToSection = (e, sectionId) => {
     e.preventDefault();
+    setMobileMenuOpen(false);
     setActiveSection(sectionId);
     window.history.pushState(null, '', `#${sectionId}`);
-    const target = document.getElementById(sectionId);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   return (
-    <div className="ap-shell">
-      <div className="ap-frame">
-        <ProfileSidebar />
+    <div className="mn-shell">
+      {/* FLOATING CENTER PILL NAVBAR */}
+      <header className="mn-nav-wrapper">
+        <nav className="mn-nav-pill" aria-label="Main Navigation">
+          <a
+            href="#home"
+            onClick={(e) => scrollToSection(e, 'home')}
+            className="mn-nav-brand"
+            aria-label="Back to top"
+          >
+            <span className="mn-brand-letter">R</span>
+            <span className="mn-brand-dot">.</span>
+          </a>
 
-        <main className="ap-workspace" aria-label="Dokumentasi Portofolio dan Hasil Analisis">
-          <SectionNav activeSection={activeSection} onNavigate={handleNavigate} />
+          <ul className="mn-nav-links">
+            {NAV_LINKS.map((item) => {
+              const isActive = activeSection === item.id;
+              return (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    onClick={(e) => scrollToSection(e, item.id)}
+                    className={`mn-nav-link ${isActive ? 'active' : ''}`}
+                    aria-current={isActive ? 'location' : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
 
-          <div className="ap-workspace-scroll" ref={scrollContainerRef}>
-            {/* 1. RINGKASAN */}
-            <section id="ringkasan" className="ap-section" aria-labelledby="heading-ringkasan">
-              <div className="ap-section-header">
-                <h2 id="heading-ringkasan" className="ap-section-title">
-                  Ringkasan Kerja
-                </h2>
-                <span className="ap-section-subtitle">
-                  Data Engineering, Otomasi Pipeline ETL &amp; Analisis Operasional
-                </span>
+          <div className="mn-nav-action">
+            <a
+              href={PROFILE_DATA.cvPdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mn-btn-resume"
+              title="Download CV of Rofiq Samanhudi (PDF)"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" x2="12" y1="15" y2="3" />
+              </svg>
+              <span>Resume</span>
+            </a>
+
+            <button
+              type="button"
+              className="mn-mobile-toggle"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                {mobileMenuOpen ? (
+                  <path d="M18 6 6 18M6 6l12 12" />
+                ) : (
+                  <path d="M4 12h16M4 6h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
+        </nav>
+
+        {/* Mobile Dropdown */}
+        {mobileMenuOpen && (
+          <div className="mn-mobile-dropdown">
+            {NAV_LINKS.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={(e) => scrollToSection(e, item.id)}
+                className={`mn-mobile-link ${activeSection === item.id ? 'active' : ''}`}
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        )}
+      </header>
+
+      {/* FLOATING RIGHT SOCIAL BUBBLES (4 BUBBLES) */}
+      <aside className="mn-floating-dock" aria-label="Direct Contact">
+        <a
+          href={PROFILE_DATA.linkedinUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mn-dock-bubble"
+          aria-label="LinkedIn Profile"
+          title="LinkedIn: in/rofiqsamanhudi"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+            <rect width="4" height="12" x="2" y="9" />
+            <circle cx="4" cy="4" r="2" />
+          </svg>
+        </a>
+
+        <a
+          href={PROFILE_DATA.githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mn-dock-bubble"
+          aria-label="GitHub Profile"
+          title="GitHub: github.com/rofiqsamanhudi"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+            <path d="M9 18c-4.51 2-5-2-7-2" />
+          </svg>
+        </a>
+
+        <a
+          href={PROFILE_DATA.whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mn-dock-bubble"
+          aria-label={`WhatsApp: ${PROFILE_DATA.phoneDisplay}`}
+          title={`WhatsApp: ${PROFILE_DATA.phoneDisplay}`}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+          </svg>
+        </a>
+
+        <a
+          href={`mailto:${PROFILE_DATA.email}`}
+          className="mn-dock-bubble"
+          aria-label={`Email: ${PROFILE_DATA.email}`}
+          title={`Email: ${PROFILE_DATA.email}`}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect width="20" height="16" x="2" y="4" rx="2" />
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+          </svg>
+        </a>
+      </aside>
+
+      <main>
+        {/* HERO SECTION - REFINED CLASSIC MODERN MINIMALIST */}
+        <section id="home" className="mn-hero-section">
+          {/* Subtle Ambient Halo */}
+          <div className="mn-hero-ambient-halo" aria-hidden="true" />
+
+          <div className="mn-container mn-hero-content">
+            <div className="mn-status-pill">
+              <span className="mn-status-dot" aria-hidden="true" />
+              <span>Available for Career Opportunities &bull; Research &amp; Data Analyst</span>
+            </div>
+
+            {/* Ethereal Portrait Frame */}
+            <div className="mn-hero-avatar-canvas">
+              <div className="mn-hero-avatar-glow" aria-hidden="true" />
+              <img
+                src={PROFILE_DATA.photos.profile}
+                alt="Rofiq Samanhudi"
+                width="144"
+                height="144"
+                className="mn-hero-avatar-img"
+                fetchPriority="high"
+              />
+            </div>
+
+            {/* Display Greeting */}
+            <h1 className="mn-hero-display-title">Hello</h1>
+
+            {/* Subtitle with Hairline Accents */}
+            <div className="mn-hero-byline-bar">
+              <span className="mn-hairline" aria-hidden="true" />
+              <span className="mn-byline-text">It&apos;s Rofiq, a Data Analyst &amp; Research Enthusiast</span>
+              <span className="mn-hairline" aria-hidden="true" />
+            </div>
+
+            <p className="mn-hero-summary">
+              Informatics graduate (Data Science Concentration) from Universitas Muhammadiyah Malang. Focused on quantitative research, statistical classification, Python and R data analysis, automated ETL pipelines, and structured business dashboards.
+            </p>
+
+            <div className="mn-hero-cta">
+              <a
+                href="#projects"
+                onClick={(e) => scrollToSection(e, 'projects')}
+                className="mn-btn-primary"
+              >
+                Explore Featured Projects
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </a>
+
+              <a
+                href={PROFILE_DATA.cvPdfUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mn-btn-secondary"
+              >
+                Download Resume (PDF)
+              </a>
+            </div>
+
+            <div className="mn-hero-highlights">
+              <div className="mn-highlight-item">
+                <strong>10 Projects</strong>
+                <span>Completed Systems</span>
+              </div>
+              <span className="mn-highlight-sep">&bull;</span>
+              <div className="mn-highlight-item">
+                <strong>Research &amp; Analysis</strong>
+                <span>Statistics &amp; Classification</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ABOUT ME SECTION */}
+        <section id="about" className="mn-section mn-section-about">
+          <div className="mn-container">
+            <div className="mn-section-kicker">About Me</div>
+            <h2 className="mn-section-title">
+              Bridging quantitative rigor and data engineering to turn raw numbers into dependable business decisions.
+            </h2>
+
+            <div className="mn-about-grid">
+              <div className="mn-about-text">
+                <p>
+                  I specialize in bridging statistical research and data engineering. With a strong quantitative foundation from Universitas Muhammadiyah Malang (Data Science specialization, GPA 3.82), I focus on structuring complex real-world data into clear analytical models, from exploratory hypothesis testing to multi-class predictive classification.
+                </p>
+                <p>
+                  During my industrial internships in manufacturing and e-commerce retail, I engineered automated Python ETL pipelines that consolidated weekly transactions across 7 marketplace platforms, built rolling demand-forecasting models (Weighted Moving Average) that aligned inventory purchases with factory capacities, and resolved discrepancies between physical warehouse counts and central accounting ledgers.
+                </p>
+                <p>
+                  Whether designing automated Python scripts, querying relational databases in SQL, or presenting findings through interactive Looker Studio dashboards, my commitment is clear: to help cross-functional teams make timely, evidence-based decisions with full trust in their underlying numbers.
+                </p>
               </div>
 
-              <div className="ap-summary-main">
-                <p className="ap-prose">
-                  Saya <strong>Rofiq Samanhudi</strong>, lulusan S1 Informatika (Peminatan Data Science) Universitas Muhammadiyah Malang dengan IPK <strong>3,82 / 4,00</strong>. Saya berfokus pada <strong>Data Engineering</strong> dan <strong>Data Analytics</strong> untuk menyelesaikan tantangan operasional riil, menjembatani data mentah menjadi keputusan bisnis yang presisi.
-                </p>
-                <p className="ap-prose">
-                  Melalui pengalaman kerja dan magang di <strong>PT. Kilap Global Group &amp; PT Kilapkan Seluruh Bangsa</strong>, saya membangun skrip otomasi <strong>Python (Pandas, NumPy, OpenPyXL)</strong>, query basis data <strong>SQL</strong>, serta model kalkulasi <strong>Cost Control Produksi (Analisis Biaya Material &amp; HPP)</strong> untuk mengeliminasi rekapitulasi manual yang rawan diskrepansi. Saya juga merancang dashboard interaktif <strong>Looker Studio</strong> untuk divisi B2B dan Finance, mengembangkan tools web internal berbasis <strong>Next.js</strong>, serta mengeksekusi analisis performa berkala (weekly, monthly, dan kuartalan) lintas divisi bersama tim R&amp;D, Host Live, dan Data.
-                </p>
-              </div>
-            </section>
+              <div className="mn-metrics-grid">
+                <div className="mn-metric-card">
+                  <div className="mn-metric-num">10+</div>
+                  <div className="mn-metric-label">Systems &amp; Case Studies</div>
+                  <div className="mn-metric-sub">Automated Python ETL workflows, tax converters, and web analytics tools.</div>
+                </div>
 
-            {/* 2. PROJEK & ARSITEKTUR SISTEM */}
-            <section id="studi-kasus" className="ap-section" aria-labelledby="heading-studi-kasus">
-              <div className="ap-section-header">
-                <div>
-                  <h2 id="heading-studi-kasus" className="ap-section-title">
-                    Projek dan Arsitektur Sistem
-                  </h2>
-                  <span className="ap-section-subtitle">
-                    Pilih judul proyek atau tombol Lihat alur &amp; rumus untuk membuka rincian alur kerja, rumus, dan struktur data
-                  </span>
+                <div className="mn-metric-card">
+                  <div className="mn-metric-num">7 Channels</div>
+                  <div className="mn-metric-label">Multi-Marketplace Integration</div>
+                  <div className="mn-metric-sub">Consolidated weekly transactions across Shopee, TikTok Shop, Tokopedia, and Lazada.</div>
+                </div>
+
+                <div className="mn-metric-card">
+                  <div className="mn-metric-num">3.82</div>
+                  <div className="mn-metric-label">GPA / 4.00 (Data Science)</div>
+                  <div className="mn-metric-sub">Academic focus on Relational Databases, Data Mining, and Applied Probability &amp; Statistics.</div>
+                </div>
+
+                <div className="mn-metric-card">
+                  <div className="mn-metric-num">100%</div>
+                  <div className="mn-metric-label">Audit Reconciliation Accuracy</div>
+                  <div className="mn-metric-sub">Zero-variance reconciliation across warehouse rack inventories and multi-level BOMs.</div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
 
-              <div className="ap-case-list">
-                {ALL_CASES.map((item) => (
-                  <CaseRow key={item.id} item={item} />
-                ))}
+        {/* FEATURED PROJECTS SECTION */}
+        <section id="projects" className="mn-section mn-section-projects">
+          <span id="studi-kasus" style={{ position: 'relative', top: '-100px', visibility: 'hidden' }} />
+
+          <div className="mn-container">
+            <div className="mn-projects-head">
+              <div>
+                <div className="mn-section-kicker">Projects.</div>
+                <h2 className="mn-section-title-large">Featured Projects.</h2>
+                <p className="mn-section-desc">
+                  A curated collection of data engineering pipelines, operational calculators, and analytical tools built to resolve real-world challenges.
+                </p>
               </div>
-            </section>
 
-            {/* 3. KEAHLIAN & TOOLS */}
-            <section id="keahlian" className="ap-section" aria-labelledby="heading-keahlian">
-              <div className="ap-section-header">
-                <h2 id="heading-keahlian" className="ap-section-title">
-                  Keahlian &amp; Instrumen Teknis
-                </h2>
-                <span className="ap-section-subtitle">
-                  Kelompok Alat Kerja yang Dipakai pada Proyek di Atas
-                </span>
+              <div className="mn-filter-tabs" role="tablist" aria-label="Project Category Filter">
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={projectFilter === 'all'}
+                  onClick={() => setProjectFilter('all')}
+                  className={`mn-filter-btn ${projectFilter === 'all' ? 'active' : ''}`}
+                >
+                  All ({ALL_CASES.length})
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={projectFilter === 'python'}
+                  onClick={() => setProjectFilter('python')}
+                  className={`mn-filter-btn ${projectFilter === 'python' ? 'active' : ''}`}
+                >
+                  Python Pipelines ({PYTHON_SYSTEMS.length})
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={projectFilter === 'web'}
+                  onClick={() => setProjectFilter('web')}
+                  className={`mn-filter-btn ${projectFilter === 'web' ? 'active' : ''}`}
+                >
+                  Web &amp; Analytics ({WEB_SYSTEMS.length})
+                </button>
               </div>
+            </div>
 
-              <div className="ap-skills-grid">
-                {PROFILE_DATA.skillGroups.map((grp) => (
-                  <div key={grp.category} className="ap-skill-group-card">
-                    <h3 className="ap-skill-group-title">{grp.category}</h3>
-                    <div className="ap-tag-row">
-                      {grp.items.map((it) => (
-                        <span key={it} className="ap-tag">
-                          {it}
+            {/* Dark Sleek Showcase Cards */}
+            <div className="mn-projects-grid">
+              {filteredProjects.map((item) => {
+                const caseHref = `/kasus/${item.id}`;
+                const badgeLabel = item.groupType === 'python' ? 'Python ETL' : 'Web & Analytics';
+
+                return (
+                  <article key={item.id} className="mn-project-card">
+                    <div className="mn-card-header">
+                      <div className="mn-card-tags">
+                        <span className="mn-badge-code">{item.code}</span>
+                        <span className="mn-badge-cat">{badgeLabel}</span>
+                      </div>
+                      <span className="mn-card-entity">{item.entity}</span>
+                    </div>
+
+                    <h3 className="mn-card-title">
+                      <a href={caseHref} className="mn-card-title-link">
+                        {item.title}
+                      </a>
+                    </h3>
+
+                    <p className="mn-card-subtitle">{item.subtitle}</p>
+
+                    <div className="mn-card-problem">
+                      <span className="mn-problem-kicker">Operational Context:</span>
+                      <p>{item.problemStatement}</p>
+                    </div>
+
+                    <div className="mn-card-stack">
+                      {item.stack.map((stk) => (
+                        <span key={stk} className="mn-stack-tag">
+                          {stk}
                         </span>
                       ))}
                     </div>
-                  </div>
-                ))}
-              </div>
-            </section>
 
-            {/* 4. PENGALAMAN & PENDIDIKAN */}
-            <section id="cv" className="ap-section" aria-labelledby="heading-cv">
-              <div className="ap-section-header">
-                <h2 id="heading-cv" className="ap-section-title">
-                  Pengalaman, Pendidikan &amp; Sertifikasi
-                </h2>
-                <span className="ap-section-subtitle">
-                  Riwayat Kerja, Akademik &amp; Pelatihan
-                </span>
-              </div>
+                    <div className="mn-card-footer">
+                      <a href={caseHref} className="mn-card-action">
+                        View Technical Workflow &amp; Logic
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </a>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
 
-              <div className="ap-case-list">
-                {PROFILE_DATA.experiences.map((exp) => (
-                  <article key={`${exp.company}-${exp.role}-${exp.period}`} className="ap-case-row">
-                    <div>
-                      <h3 style={{ fontSize: '15.5px', fontWeight: 800, color: 'var(--text)' }}>
-                        {exp.role}
-                      </h3>
-                      <div className="ap-case-meta">
-                        <strong>{exp.company}</strong>
-                        <span>&bull;</span>
-                        <span>{exp.location}</span>
-                        <span>&bull;</span>
-                        <span className="ap-code-badge">{exp.period}</span>
+        {/* EXPERIENCE & EDUCATION SECTION - SPLIT TIMELINE SHOWCASE */}
+        <section id="experience" className="mn-section mn-section-experience">
+          <div className="mn-container">
+            <div className="mn-section-kicker">Resume.</div>
+            <h2 className="mn-section-title-large">Professional Journey.</h2>
+            <p className="mn-section-desc">
+              Practical industry internships, university laboratory mentorship, and formal academic background.
+            </p>
+
+            <div className="mn-journey-grid">
+              {/* LEFT COLUMN: WORK EXPERIENCE TIMELINE */}
+              <div className="mn-journey-column">
+                <div className="mn-journey-section-title">
+                  <span className="mn-column-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect width="20" height="14" x="2" y="7" rx="2" />
+                      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                    </svg>
+                  </span>
+                  <span>Work Experience</span>
+                </div>
+
+                <div className="mn-journey-timeline">
+                  <div className="mn-journey-line" aria-hidden="true" />
+
+                  {PROFILE_DATA.experiences.map((exp) => (
+                    <div key={`${exp.company}-${exp.role}-${exp.period}`} className="mn-journey-item">
+                      <div className="mn-journey-node" aria-hidden="true">
+                        <span className="mn-node-inner" />
+                      </div>
+
+                      <div className="mn-journey-head">
+                        <div className="mn-journey-role-wrap">
+                          <h3 className="mn-journey-role">{exp.role}</h3>
+                          <span className="mn-journey-badge">{exp.period}</span>
+                        </div>
+
+                        <div className="mn-journey-meta">
+                          <span className="mn-meta-org">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect width="16" height="20" x="4" y="2" rx="2" />
+                              <path d="M9 22v-4h6v4" />
+                              <path d="M8 6h.01M16 6h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01" />
+                            </svg>
+                            <span>{exp.company}</span>
+                          </span>
+                          <span className="mn-meta-sep">&bull;</span>
+                          <span className="mn-meta-loc">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                              <circle cx="12" cy="10" r="3" />
+                            </svg>
+                            <span>{exp.location}</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="mn-journey-card">
+                        <ul className="mn-journey-checklist">
+                          {(exp.highlights || []).map((h) => (
+                            <li key={h} className="mn-journey-check-item">
+                              <span className="mn-check-circle" aria-hidden="true">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                  <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                              </span>
+                              <span className="mn-check-text">{h}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     </div>
-                    <ul className="ap-bullet-list">
-                      {(exp.highlights || []).map((item) => (
-                        <li key={item}>{item}</li>
+                  ))}
+                </div>
+              </div>
+
+              {/* RIGHT COLUMN: EDUCATION & CERTIFICATIONS */}
+              <div className="mn-journey-sidebar">
+                {/* EDUCATION BLOCK */}
+                <div className="mn-sidebar-block">
+                  <div className="mn-journey-section-title">
+                    <span className="mn-column-icon" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
+                        <path d="M22 10v6" />
+                        <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
+                      </svg>
+                    </span>
+                    <span>Education</span>
+                  </div>
+
+                  <div className="mn-education-card">
+                    <h3 className="mn-education-degree">{PROFILE_DATA.education.degree}</h3>
+                    <div className="mn-education-school">{PROFILE_DATA.education.institution}</div>
+                    
+                    <div className="mn-education-strip">
+                      <span className="mn-edu-period">{PROFILE_DATA.education.period}</span>
+                      <span className="mn-edu-sep">&bull;</span>
+                      <span className="mn-edu-gpa">GPA: <strong>{PROFILE_DATA.education.gpa}</strong></span>
+                    </div>
+
+                    <ul className="mn-education-details">
+                      {(PROFILE_DATA.education.details || []).map((d) => (
+                        <li key={d} className="mn-edu-detail-item">
+                          <span className="mn-check-circle" aria-hidden="true">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                          </span>
+                          <span className="mn-edu-detail-text">{d}</span>
+                        </li>
                       ))}
                     </ul>
-                  </article>
-                ))}
-
-                <article className="ap-case-row">
-                  <div>
-                    <h3 style={{ fontSize: '15.5px', fontWeight: 800, color: 'var(--text)' }}>
-                      {PROFILE_DATA.education.degree}
-                    </h3>
-                    <div className="ap-case-meta">
-                      <strong>{PROFILE_DATA.education.institution}</strong>
-                      <span>&bull;</span>
-                      <span>{PROFILE_DATA.education.period}</span>
-                      <span>&bull;</span>
-                      <span className="ap-code-badge">IPK: {PROFILE_DATA.education.gpa}</span>
-                    </div>
                   </div>
-                  <ul className="ap-bullet-list">
-                    {(PROFILE_DATA.education.details || []).map((dt) => (
-                      <li key={dt}>{dt}</li>
-                    ))}
-                  </ul>
-                </article>
+                </div>
 
-                <article className="ap-case-row" style={{ borderBottom: 'none' }}>
-                  <div>
-                    <h3 style={{ fontSize: '15.5px', fontWeight: 800, color: 'var(--text)' }}>
-                      Sertifikasi &amp; Pelatihan
-                    </h3>
+                {/* CERTIFICATIONS BLOCK */}
+                <div className="mn-sidebar-block">
+                  <div className="mn-journey-section-title">
+                    <span className="mn-column-icon" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z" />
+                        <path d="M8.21 13.89 7 23l5-3 5 3-1.21-9.12" />
+                      </svg>
+                    </span>
+                    <span>Verified Certifications</span>
                   </div>
-                  <ul className="ap-bullet-list">
+
+                  <div className="mn-cert-stack">
                     {PROFILE_DATA.certifications.map((cert) => (
-                      <li key={cert.title}>
-                        <strong>{cert.title}</strong> ({cert.issuer}, {cert.date})
-                      </li>
+                      <div key={cert.title} className="mn-cert-row">
+                        <div className="mn-cert-title">{cert.title}</div>
+                        <div className="mn-cert-meta">
+                          <span>{cert.issuer}</span>
+                          <span className="mn-meta-sep">&bull;</span>
+                          <span>{cert.date}</span>
+                        </div>
+                      </div>
                     ))}
-                  </ul>
-                </article>
+                  </div>
+                </div>
               </div>
-            </section>
+            </div>
           </div>
+        </section>
 
-          <footer className="ap-workspace-footer">
-            <span>
-              &copy; {new Date().getFullYear()} <strong>{PROFILE_DATA.name}</strong>
-            </span>
-            <span>Dokumentasi Sistem &amp; Analisis Data (Angka Contoh Berlabel Data Simulasi)</span>
-          </footer>
-        </main>
-      </div>
+        {/* SKILLS SECTION */}
+        <section id="skills" className="mn-section mn-section-skills">
+          <div className="mn-container">
+            <div className="mn-section-kicker">Skills.</div>
+            <h2 className="mn-section-title-large">Skills &amp; Technologies.</h2>
+            <p className="mn-section-desc">
+              Technical tools, programming languages, and analytical methodologies applied across projects.
+            </p>
+
+            <div className="mn-skills-grid">
+              {PROFILE_DATA.skillGroups.map((grp) => (
+                <div key={grp.category} className="mn-skill-box">
+                  <h3 className="mn-skill-title">{grp.category}</h3>
+                  <div className="mn-skill-tags">
+                    {grp.items.map((it) => (
+                      <span key={it} className="mn-skill-tag">
+                        {it}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CONTACT SECTION */}
+        <section id="contact" className="mn-section mn-section-contact">
+          <div className="mn-container mn-contact-wrap">
+            <div className="mn-section-kicker">Get in touch.</div>
+            <h2 className="mn-contact-title">
+              Let&apos;s build something impactful.
+            </h2>
+            <p className="mn-contact-desc">
+              Open to career opportunities as a Research &amp; Data Analyst and Data Engineer, data automation initiatives, and collaborative technical projects.
+            </p>
+
+            <div className="mn-contact-cards">
+              <a href={`mailto:${PROFILE_DATA.email}`} className="mn-contact-card">
+                <div className="mn-contact-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <rect width="20" height="16" x="2" y="4" rx="2" />
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                  </svg>
+                </div>
+                <div className="mn-contact-label">Email</div>
+                <div className="mn-contact-val">{PROFILE_DATA.email}</div>
+              </a>
+
+              <a href={PROFILE_DATA.whatsappUrl} target="_blank" rel="noopener noreferrer" className="mn-contact-card">
+                <div className="mn-contact-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                </div>
+                <div className="mn-contact-label">WhatsApp</div>
+                <div className="mn-contact-val">{PROFILE_DATA.phoneDisplay}</div>
+              </a>
+
+              <a href={PROFILE_DATA.linkedinUrl} target="_blank" rel="noopener noreferrer" className="mn-contact-card">
+                <div className="mn-contact-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                    <rect width="4" height="12" x="2" y="9" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg>
+                </div>
+                <div className="mn-contact-label">LinkedIn</div>
+                <div className="mn-contact-val">in/rofiqsamanhudi</div>
+              </a>
+
+              <a href={PROFILE_DATA.githubUrl} target="_blank" rel="noopener noreferrer" className="mn-contact-card">
+                <div className="mn-contact-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                    <path d="M9 18c-4.51 2-5-2-7-2" />
+                  </svg>
+                </div>
+                <div className="mn-contact-label">GitHub</div>
+                <div className="mn-contact-val">github.com/rofiqsamanhudi</div>
+              </a>
+            </div>
+
+            <div className="mn-contact-cta">
+              <a
+                href={PROFILE_DATA.cvPdfUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mn-btn-primary mn-btn-large"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" x2="12" y1="15" y2="3" />
+                </svg>
+                Download Curriculum Vitae (PDF)
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* FOOTER */}
+      <footer className="mn-footer">
+        <div className="mn-container mn-footer-flex">
+          <div className="mn-footer-left">
+            <span className="mn-footer-brand">R.</span>
+            <span>Rofiq Samanhudi &bull; Research &amp; Data Analyst | Data Engineer</span>
+          </div>
+          <div className="mn-footer-right">
+            &copy; {new Date().getFullYear()} Rofiq Samanhudi. All sample datasets labeled as technical simulations.
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -1,14 +1,14 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Rofiq Samanhudi | Data Engineer & Data Analyst Portfolio',
+  title: 'Rofiq Samanhudi | Research & Data Analyst, Data Engineer Portfolio',
   description:
-    'Portofolio profesional Rofiq Samanhudi (Data Engineer & Data Analyst). Berisi penjelasan arsitektur sistem otomasi data, pipeline ETL, pemodelan data, formulasi perhitungan, dan metodologi pengerjaan.',
+    'Professional portfolio of Rofiq Samanhudi, Research & Data Analyst and Data Engineer. Featuring technical documentation on automated ETL pipelines, statistical modeling, operational reconciliation, and analytical dashboards.',
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="id">
+    <html lang="en">
       <body>
         {children}
       </body>
