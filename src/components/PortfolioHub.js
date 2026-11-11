@@ -65,7 +65,7 @@ export default function PortfolioHub() {
             className="mn-nav-brand"
             aria-label="Back to top"
           >
-            <span className="mn-brand-letter">R</span>
+            <span className="mn-brand-luxury">Fiq</span>
             <span className="mn-brand-dot">.</span>
           </a>
 
@@ -196,124 +196,161 @@ export default function PortfolioHub() {
       </aside>
 
       <main>
-        {/* HERO SECTION - REFINED CLASSIC MODERN MINIMALIST */}
+        {/* HERO SECTION - SPLIT EDITORIAL SHOWCASE (OPTION 1) */}
         <section id="home" className="mn-hero-section">
-          {/* Subtle Ambient Halo */}
-          <div className="mn-hero-ambient-halo" aria-hidden="true" />
-
-          <div className="mn-container mn-hero-content">
-            <div className="mn-status-pill">
-              <span className="mn-status-dot" aria-hidden="true" />
-              <span>Available for Career Opportunities &bull; Research &amp; Data Analyst</span>
-            </div>
-
-            {/* Ethereal Portrait Frame */}
-            <div className="mn-hero-avatar-canvas">
-              <div className="mn-hero-avatar-glow" aria-hidden="true" />
-              <img
-                src={PROFILE_DATA.photos.profile}
-                alt="Rofiq Samanhudi"
-                width="144"
-                height="144"
-                className="mn-hero-avatar-img"
-                fetchPriority="high"
-              />
-            </div>
-
-            {/* Display Greeting */}
-            <h1 className="mn-hero-display-title">Hello</h1>
-
-            {/* Subtitle with Hairline Accents */}
-            <div className="mn-hero-byline-bar">
-              <span className="mn-hairline" aria-hidden="true" />
-              <span className="mn-byline-text">It&apos;s Rofiq, a Data Analyst &amp; Research Enthusiast</span>
-              <span className="mn-hairline" aria-hidden="true" />
-            </div>
-
-            <p className="mn-hero-summary">
-              Informatics graduate (Data Science Concentration) from Universitas Muhammadiyah Malang. Focused on quantitative research, statistical classification, Python and R data analysis, automated ETL pipelines, and structured business dashboards.
-            </p>
-
-            <div className="mn-hero-cta">
-              <a
-                href="#projects"
-                onClick={(e) => scrollToSection(e, 'projects')}
-                className="mn-btn-primary"
-              >
-                Explore Featured Projects
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="m9 18 6-6-6-6" />
-                </svg>
-              </a>
-
-              <a
-                href={PROFILE_DATA.cvPdfUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mn-btn-secondary"
-              >
-                Download Resume (PDF)
-              </a>
-            </div>
-
-            <div className="mn-hero-highlights">
-              <div className="mn-highlight-item">
-                <strong>10 Projects</strong>
-                <span>Completed Systems</span>
+          <div className="mn-container mn-hero-split-grid">
+            {/* Left Column: Narrative, Typography & Direct Actions */}
+            <div className="mn-hero-text-col">
+              <div className="mn-status-pill">
+                <span className="mn-status-dot" aria-hidden="true" />
+                <span>Available for Career Opportunities &bull; Research &amp; Data Analyst</span>
               </div>
-              <span className="mn-highlight-sep">&bull;</span>
-              <div className="mn-highlight-item">
-                <strong>Research &amp; Analysis</strong>
-                <span>Statistics &amp; Classification</span>
+
+              <h1 className="mn-hero-display-title">Hello.</h1>
+
+              <div className="mn-hero-byline-bar">
+                <span className="mn-hairline" aria-hidden="true" />
+                <span className="mn-byline-text">It&apos;s Rofiq, a Data Analyst &amp; Research Specialist</span>
+              </div>
+
+              <p className="mn-hero-summary">
+                Informatics graduate (Data Science Concentration) from Universitas Muhammadiyah Malang. Focused on quantitative research, statistical classification, Python and R data analysis, automated ETL pipelines, and structured business dashboards.
+              </p>
+
+              <div className="mn-hero-cta">
+                <a
+                  href="#projects"
+                  onClick={(e) => scrollToSection(e, 'projects')}
+                  className="mn-btn-primary"
+                >
+                  Explore Featured Projects
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </a>
+
+                <a
+                  href={PROFILE_DATA.cvPdfUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mn-btn-secondary"
+                >
+                  Download Resume (PDF)
+                </a>
+              </div>
+
+              <div className="mn-hero-highlights">
+                <div className="mn-highlight-item">
+                  <strong>10 Projects</strong>
+                  <span>Completed Systems</span>
+                </div>
+                <span className="mn-highlight-sep">&bull;</span>
+                <div className="mn-highlight-item">
+                  <strong>Research &amp; Analysis</strong>
+                  <span>Statistics &amp; Classification</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: High-Definition Clean Sketch Artwork */}
+            <div className="mn-hero-visual-col">
+              <div className="mn-hero-sketch-frame">
+                <img
+                  src="/profile/rofiq-sketch-clean.jpg"
+                  alt="Rofiq Samanhudi - Hand-drawn graphite pencil portrait"
+                  width="764"
+                  height="1024"
+                  fetchPriority="high"
+                  className="mn-hero-sketch-img"
+                />
               </div>
             </div>
           </div>
         </section>
 
-        {/* ABOUT ME SECTION */}
+        {/* ABOUT ME SECTION - REFINED EDITORIAL OVERVIEW */}
         <section id="about" className="mn-section mn-section-about">
           <div className="mn-container">
-            <div className="mn-section-kicker">About Me</div>
+            <div className="mn-section-kicker">About Me.</div>
             <h2 className="mn-section-title">
-              Bridging quantitative rigor and data engineering to turn raw numbers into dependable business decisions.
+              Bridging quantitative research and automated data engineering to turn raw numbers into dependable business decisions.
             </h2>
 
             <div className="mn-about-grid">
-              <div className="mn-about-text">
-                <p>
-                  I specialize in bridging statistical research and data engineering. With a strong quantitative foundation from Universitas Muhammadiyah Malang (Data Science specialization, GPA 3.82), I focus on structuring complex real-world data into clear analytical models, from exploratory hypothesis testing to multi-class predictive classification.
+              {/* Left Column: Narrative & Focus Pillars */}
+              <div className="mn-about-narrative-col">
+                <p className="mn-about-lead">
+                  I am a Research &amp; Data Analyst with a quantitative foundation in Data Science from Universitas Muhammadiyah Malang. I specialize in structuring complex transactional data into verifiable analytical models, from exploratory hypothesis testing to multi-class statistical classification.
                 </p>
-                <p>
-                  During my industrial internships in manufacturing and e-commerce retail, I engineered automated Python ETL pipelines that consolidated weekly transactions across 7 marketplace platforms, built rolling demand-forecasting models (Weighted Moving Average) that aligned inventory purchases with factory capacities, and resolved discrepancies between physical warehouse counts and central accounting ledgers.
+
+                <p className="mn-about-body">
+                  During my industrial internships in manufacturing and e-commerce retail, I tackled real operational bottlenecks: building automated Python pipelines that consolidated sales across 7 marketplace platforms, implementing rolling inventory demand forecasts, and resolving warehouse inventory discrepancies with zero variance.
                 </p>
-                <p>
-                  Whether designing automated Python scripts, querying relational databases in SQL, or presenting findings through interactive Looker Studio dashboards, my commitment is clear: to help cross-functional teams make timely, evidence-based decisions with full trust in their underlying numbers.
-                </p>
+
+                {/* Core Competency Checklist */}
+                <div className="mn-about-competencies">
+                  <div className="mn-competency-item">
+                    <span className="mn-comp-icon" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                    <div>
+                      <strong>Automated ETL &amp; Integration:</strong> Python workflows consolidating multi-channel transactions without manual re-entry.
+                    </div>
+                  </div>
+
+                  <div className="mn-competency-item">
+                    <span className="mn-comp-icon" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                    <div>
+                      <strong>Quantitative Forecasting:</strong> Weighted Moving Average algorithms synchronizing purchasing with factory throughput.
+                    </div>
+                  </div>
+
+                  <div className="mn-competency-item">
+                    <span className="mn-comp-icon" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                    <div>
+                      <strong>Audited Ledger Accuracy:</strong> Stock reconciliations cross-referencing multi-level BOMs with accounting records.
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="mn-metrics-grid">
-                <div className="mn-metric-card">
-                  <div className="mn-metric-num">10+</div>
-                  <div className="mn-metric-label">Systems &amp; Case Studies</div>
-                  <div className="mn-metric-sub">Automated Python ETL workflows, tax converters, and web analytics tools.</div>
+              {/* Right Column: High-Impact Milestones */}
+              <div className="mn-about-metrics-col">
+                <div className="mn-impact-card">
+                  <div className="mn-impact-badge">Integration</div>
+                  <div className="mn-impact-stat">7 Channels</div>
+                  <div className="mn-impact-title">Multi-Marketplace Pipeline</div>
+                  <p className="mn-impact-desc">
+                    Consolidated weekly data streams across Shopee, TikTok Shop, Tokopedia, and Lazada into unified analytical databases.
+                  </p>
                 </div>
 
-                <div className="mn-metric-card">
-                  <div className="mn-metric-num">7 Channels</div>
-                  <div className="mn-metric-label">Multi-Marketplace Integration</div>
-                  <div className="mn-metric-sub">Consolidated weekly transactions across Shopee, TikTok Shop, Tokopedia, and Lazada.</div>
+                <div className="mn-impact-card">
+                  <div className="mn-impact-badge">Auditing</div>
+                  <div className="mn-impact-stat">100%</div>
+                  <div className="mn-impact-title">Reconciliation Accuracy</div>
+                  <p className="mn-impact-desc">
+                    Eliminated discrepancies between physical warehouse counts and central accounting ledgers across thousands of SKUs.
+                  </p>
                 </div>
 
-                <div className="mn-metric-card">
-                  <div className="mn-metric-num">3.82</div>
-                  <div className="mn-metric-label">GPA / 4.00 (Data Science)</div>
-                  <div className="mn-metric-sub">Academic focus on Relational Databases, Data Mining, and Applied Probability &amp; Statistics.</div>
-                </div>
-
-                <div className="mn-metric-card">
-                  <div className="mn-metric-num">100%</div>
-                  <div className="mn-metric-label">Audit Reconciliation Accuracy</div>
-                  <div className="mn-metric-sub">Zero-variance reconciliation across warehouse rack inventories and multi-level BOMs.</div>
+                <div className="mn-impact-card">
+                  <div className="mn-impact-badge">Production</div>
+                  <div className="mn-impact-stat">10+ Systems</div>
+                  <div className="mn-impact-title">End-to-End Solutions Built</div>
+                  <p className="mn-impact-desc">
+                    Engineered operational Python scripts, CoreTax XML converters, and interactive decision dashboards for executive reporting.
+                  </p>
                 </div>
               </div>
             </div>
@@ -365,46 +402,63 @@ export default function PortfolioHub() {
               </div>
             </div>
 
-            {/* Dark Sleek Showcase Cards */}
+            {/* High-Craft Architectural Showcase Cards */}
             <div className="mn-projects-grid">
               {filteredProjects.map((item) => {
                 const caseHref = `/kasus/${item.id}`;
-                const badgeLabel = item.groupType === 'python' ? 'Python ETL' : 'Web & Analytics';
+                const badgeLabel = item.groupType === 'python' ? 'Python Pipeline' : 'Web & Analytics';
 
                 return (
                   <article key={item.id} className="mn-project-card">
-                    <div className="mn-card-header">
-                      <div className="mn-card-tags">
-                        <span className="mn-badge-code">{item.code}</span>
-                        <span className="mn-badge-cat">{badgeLabel}</span>
+                    <div>
+                      <div className="mn-card-header">
+                        <div className="mn-card-tags">
+                          <span className="mn-badge-code">{item.code}</span>
+                          <span className="mn-badge-cat">{badgeLabel}</span>
+                        </div>
+                        <span className="mn-card-entity">{item.division || item.entity}</span>
                       </div>
-                      <span className="mn-card-entity">{item.entity}</span>
-                    </div>
 
-                    <h3 className="mn-card-title">
-                      <a href={caseHref} className="mn-card-title-link">
-                        {item.title}
-                      </a>
-                    </h3>
+                      <h3 className="mn-card-title">
+                        <a href={caseHref} className="mn-card-title-link">
+                          {item.title}
+                        </a>
+                      </h3>
 
-                    <p className="mn-card-subtitle">{item.subtitle}</p>
+                      <p className="mn-card-subtitle">{item.subtitle}</p>
 
-                    <div className="mn-card-problem">
-                      <span className="mn-problem-kicker">Operational Context:</span>
-                      <p>{item.problemStatement}</p>
-                    </div>
+                      <div className="mn-card-problem">
+                        <span className="mn-problem-kicker">Operational Challenge</span>
+                        <p>{item.problemStatement}</p>
+                      </div>
 
-                    <div className="mn-card-stack">
-                      {item.stack.map((stk) => (
-                        <span key={stk} className="mn-stack-tag">
-                          {stk}
-                        </span>
-                      ))}
+                      {/* Key Project Scale Metrics */}
+                      {item.metrics && item.metrics.length > 0 && (
+                        <div className="mn-card-metrics-row">
+                          {item.metrics.slice(0, 2).map((m) => (
+                            <div key={m.label} className="mn-card-mini-metric">
+                              <span className="mn-mini-val">{m.value}</span>
+                              <span className="mn-mini-lbl">{m.label}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="mn-card-stack">
+                        {item.stack.slice(0, 5).map((stk) => (
+                          <span key={stk} className="mn-stack-tag">
+                            {stk}
+                          </span>
+                        ))}
+                        {item.stack.length > 5 && (
+                          <span className="mn-stack-tag-more">+{item.stack.length - 5} more</span>
+                        )}
+                      </div>
                     </div>
 
                     <div className="mn-card-footer">
                       <a href={caseHref} className="mn-card-action">
-                        View Technical Workflow &amp; Logic
+                        <span>Explore Technical Workflow &amp; Logic</span>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                           <path d="M5 12h14M12 5l7 7-7 7" />
                         </svg>
