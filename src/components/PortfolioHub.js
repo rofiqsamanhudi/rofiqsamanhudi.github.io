@@ -336,32 +336,32 @@ export default function PortfolioHub() {
                 </div>
               </div>
 
-              {/* Right Column: High-Impact Milestones */}
+              {/* Right Column: Grounded Professional Highlights */}
               <div className="mn-about-metrics-col">
                 <div className="mn-impact-card">
-                  <div className="mn-impact-badge">Integration</div>
-                  <div className="mn-impact-stat">7 Channels</div>
-                  <div className="mn-impact-title">Multi-Marketplace Pipeline</div>
+                  <div className="mn-impact-badge">Education</div>
+                  <div className="mn-impact-stat">3.82 GPA</div>
+                  <div className="mn-impact-title">Informatics &bull; Data Science</div>
                   <p className="mn-impact-desc">
-                    Consolidated weekly data streams across Shopee, TikTok Shop, Tokopedia, and Lazada into unified analytical databases.
+                    Graduated from Universitas Muhammadiyah Malang with focused coursework in applied probability, relational database architecture, and statistical classification.
                   </p>
                 </div>
 
                 <div className="mn-impact-card">
-                  <div className="mn-impact-badge">Auditing</div>
-                  <div className="mn-impact-stat">100%</div>
-                  <div className="mn-impact-title">Reconciliation Accuracy</div>
+                  <div className="mn-impact-badge">Core Stack</div>
+                  <div className="mn-impact-stat">Python &amp; SQL</div>
+                  <div className="mn-impact-title">Analysis &amp; ETL Pipelines</div>
                   <p className="mn-impact-desc">
-                    Eliminated discrepancies between physical warehouse counts and central accounting ledgers across thousands of SKUs.
+                    Specialized in data manipulation with Pandas, automated batch ETL scripting, database schema querying, and Looker Studio decision dashboards.
                   </p>
                 </div>
 
                 <div className="mn-impact-card">
-                  <div className="mn-impact-badge">Production</div>
-                  <div className="mn-impact-stat">10+ Systems</div>
-                  <div className="mn-impact-title">End-to-End Solutions Built</div>
+                  <div className="mn-impact-badge">Track Record</div>
+                  <div className="mn-impact-stat">10 Projects</div>
+                  <div className="mn-impact-title">Practical Systems Built</div>
                   <p className="mn-impact-desc">
-                    Engineered operational Python scripts, CoreTax XML converters, and interactive decision dashboards for executive reporting.
+                    Engineered operational solutions across factory demand forecasting, multi-channel marketplace data consolidation, warehouse inventory reconciliations, and tax data converters.
                   </p>
                 </div>
               </div>
