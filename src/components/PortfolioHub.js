@@ -339,15 +339,6 @@ export default function PortfolioHub() {
               {/* Right Column: Grounded Professional Highlights */}
               <div className="mn-about-metrics-col">
                 <div className="mn-impact-card">
-                  <div className="mn-impact-badge">Education</div>
-                  <div className="mn-impact-stat">3.82 GPA</div>
-                  <div className="mn-impact-title">Informatics &bull; Data Science</div>
-                  <p className="mn-impact-desc">
-                    Graduated from Universitas Muhammadiyah Malang with focused coursework in applied probability, relational database architecture, and statistical classification.
-                  </p>
-                </div>
-
-                <div className="mn-impact-card">
                   <div className="mn-impact-badge">Core Stack</div>
                   <div className="mn-impact-stat">Python &amp; SQL</div>
                   <div className="mn-impact-title">Analysis &amp; ETL Pipelines</div>
