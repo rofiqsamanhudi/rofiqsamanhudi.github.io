@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ALL_CASES, PYTHON_SYSTEMS, WEB_SYSTEMS, PROFILE_DATA } from '../lib/pythonSystemsData';
+import { ALL_CASES, PYTHON_SYSTEMS, WEB_SYSTEMS, ACADEMIC_SYSTEMS, PROFILE_DATA } from '../lib/pythonSystemsData';
 
 const NAV_LINKS = [
   { id: 'home', label: 'Home' },
@@ -17,10 +17,11 @@ export default function PortfolioHub() {
   const [projectFilter, setProjectFilter] = useState('all');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Filter projects by category: all, python, web
+  // Filter projects by category: all, python, web, academic
   const filteredProjects = ALL_CASES.filter((p) => {
     if (projectFilter === 'python') return p.groupType === 'python';
     if (projectFilter === 'web') return p.groupType === 'web';
+    if (projectFilter === 'academic') return p.groupType === 'academic';
     return true;
   });
 
@@ -385,7 +386,7 @@ export default function PortfolioHub() {
                 <div className="mn-section-kicker">Projects.</div>
                 <h2 className="mn-section-title-large">Featured Projects.</h2>
                 <p className="mn-section-desc">
-                  A curated collection of data engineering pipelines, operational calculators, and analytical tools built to resolve real-world challenges.
+                  A curated collection of corporate data engineering pipelines, internal analytics systems, and university machine learning research projects.
                 </p>
               </div>
 
@@ -406,7 +407,7 @@ export default function PortfolioHub() {
                   onClick={() => setProjectFilter('python')}
                   className={`mn-filter-btn ${projectFilter === 'python' ? 'active' : ''}`}
                 >
-                  Python Pipelines ({PYTHON_SYSTEMS.length})
+                  Corporate Python ({PYTHON_SYSTEMS.length})
                 </button>
                 <button
                   type="button"
@@ -415,7 +416,16 @@ export default function PortfolioHub() {
                   onClick={() => setProjectFilter('web')}
                   className={`mn-filter-btn ${projectFilter === 'web' ? 'active' : ''}`}
                 >
-                  Web &amp; Analytics ({WEB_SYSTEMS.length})
+                  Corporate Web ({WEB_SYSTEMS.length})
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={projectFilter === 'academic'}
+                  onClick={() => setProjectFilter('academic')}
+                  className={`mn-filter-btn ${projectFilter === 'academic' ? 'active' : ''}`}
+                >
+                  Academic Research ({ACADEMIC_SYSTEMS.length})
                 </button>
               </div>
             </div>
@@ -424,7 +434,16 @@ export default function PortfolioHub() {
             <div className="mn-projects-grid">
               {filteredProjects.map((item) => {
                 const caseHref = `/kasus/${item.id}`;
-                const badgeLabel = item.groupType === 'python' ? 'Python Pipeline' : 'Web & Analytics';
+                const badgeLabel =
+                  item.groupType === 'python'
+                    ? 'Corporate Pipeline'
+                    : item.groupType === 'web'
+                    ? 'Corporate Web'
+                    : 'Academic Research';
+                const challengeLabel =
+                  item.groupType === 'academic'
+                    ? 'Research & Engineering Challenge'
+                    : 'Operational Challenge';
 
                 return (
                   <article key={item.id} className="mn-project-card">
@@ -446,14 +465,14 @@ export default function PortfolioHub() {
                       <p className="mn-card-subtitle">{item.subtitle}</p>
 
                       <div className="mn-card-problem">
-                        <span className="mn-problem-kicker">Operational Challenge</span>
+                        <span className="mn-problem-kicker">{challengeLabel}</span>
                         <p>{item.problemStatement}</p>
                       </div>
 
                       {/* Key Project Scale Metrics */}
                       {item.metrics && item.metrics.length > 0 && (
                         <div className="mn-card-metrics-row">
-                          {item.metrics.slice(0, 2).map((m) => (
+                          {item.metrics.slice(0, 3).map((m) => (
                             <div key={m.label} className="mn-card-mini-metric">
                               <span className="mn-mini-val">{m.value}</span>
                               <span className="mn-mini-lbl">{m.label}</span>
@@ -481,6 +500,39 @@ export default function PortfolioHub() {
                           <path d="M5 12h14M12 5l7 7-7 7" />
                         </svg>
                       </a>
+                      {(item.githubUrl || item.liveUrl) && (
+                        <div className="mn-card-ext-actions">
+                          {item.githubUrl && (
+                            <a
+                              href={item.githubUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mn-card-icon-action"
+                              title="View Source on GitHub"
+                              aria-label={`View ${item.title} source code on GitHub`}
+                            >
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                                <path d="M9 18c-4.51 2-5-2-7-2" />
+                              </svg>
+                              <span>GitHub</span>
+                            </a>
+                          )}
+                          {item.liveUrl && (
+                            <a
+                              href={item.liveUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mn-card-icon-action mn-card-live-pill"
+                              title="Launch Live Web App"
+                              aria-label={`Open live Streamlit web application for ${item.title}`}
+                            >
+                              <span className="mn-live-indicator-dot" aria-hidden="true" />
+                              <span>Live App</span>
+                            </a>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </article>
                 );

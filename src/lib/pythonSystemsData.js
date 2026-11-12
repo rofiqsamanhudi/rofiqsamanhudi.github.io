@@ -853,6 +853,7 @@ export const PROFILE_DATA = {
       items: [
         'Python',
         'Pandas & NumPy',
+        'PyTorch & Scikit-Learn',
         'ETL Pipelines',
         'OpenPyXL (Excel Automation)',
         'Google Apps Script',
@@ -944,6 +945,416 @@ export const PROFILE_DATA = {
   ],
 };
 
+export const ACADEMIC_SYSTEMS = [
+  {
+    id: 'tpe-melanoma-ensemble',
+    number: '11',
+    code: '11',
+    title: 'Enhanced Melanoma Classification with Bayesian TPE & Ensemble Transfer Learning',
+    subtitle: 'Automated Hyperparameter Optimization across 4 Deep Architectures with Weighted Multi-Model Fusion',
+    entity: 'Universitas Muhammadiyah Malang (UMM)',
+    division: 'Informatics • Computer Vision & Automated Deep Learning',
+    localPath: 'https://github.com/rofiqsamanhudi/Tree-Structured-Parzen-Estimator',
+    githubUrl: 'https://github.com/rofiqsamanhudi/Tree-Structured-Parzen-Estimator',
+    entryFile: 'main/[6] model/model_def.py',
+    environment: 'Python 3.9+, PyTorch, timm, torchvision, Pillow',
+    stack: ['PyTorch', 'Vision Transformer (ViT)', 'DenseNet-121', 'InceptionV3', 'Xception', 'Bayesian Optimization (TPE)', 'Weighted Ensemble'],
+    summary:
+      'Engineered an automated melanoma dermoscopy classification system that optimizes four deep learning backbones (DenseNet-121, InceptionV3, Xception, and ViT-Small/16) independently via Tree-Structured Parzen Estimator (TPE), fusing predictions into an optimized weighted ensemble that exceeds the benchmark reference paper.',
+    metrics: [
+      { label: 'Tuned Architectures', value: '4 CNN & ViT Backbones' },
+      { label: 'Optimization Engine', value: 'Bayesian TPE Optimization' },
+      { label: 'Ensemble Artifact', value: 'ensemble_best.pth' },
+    ],
+    problemStatement:
+      'Dermoscopic melanoma classification faces substantial variance across single-model architectures due to varying receptive field sizes, local artifact noise, and hyperparameter sensitivity. Manual grid or random search consumes immense GPU compute without guaranteeing convergence to optimal learning rates, dropout ratios, or ensemble weights.',
+    workflowSteps: [
+      {
+        step: '1. Dermoscopic Image Preprocessing & Multi-Resolution Scaling',
+        detail:
+          'Normalizes dermoscopic images with ImageNet statistics and resizes according to architectural receptive fields: 224x224 for DenseNet-121 and ViT, and 299x299 for InceptionV3 and Xception.',
+      },
+      {
+        step: '2. Bayesian Optimization per Backbone with TPE',
+        detail:
+          'Employs Tree-Structured Parzen Estimator to construct non-parametric density representations over continuous hyperparameter spaces, optimizing learning rate schedules, weight decay, and dropout.',
+      },
+      {
+        step: '3. Custom Classification Head Integration',
+        detail:
+          'Attaches custom two-stage classification heads (Linear -> BatchNorm1d -> GELU -> Dropout -> Linear) for CNN backbones and a 2-layer projection head for Vision Transformers.',
+      },
+      {
+        step: '4. Weighted Ensemble Optimization & State Serialization',
+        detail:
+          'Derives optimal convex combination weights across validation loss curves, packaging all four sub-model state dictionaries into a single portable checkpoint (ensemble_best.pth).',
+      },
+      {
+        step: '5. End-to-End Inference Wrapper (MelanomaEnsemble)',
+        detail:
+          'Implements a zero-overhead production wrapper that extracts sub-model weights, runs inference across individual backbones, and computes the consensus ensemble classification.',
+      },
+    ],
+    technicalRules: [
+      {
+        title: 'Bayesian Expected Improvement via Tree-Structured Parzen Estimator',
+        formula: 'EI(x) = gamma * y_star - (1 - gamma) * (g(x) / l(x))',
+        explanation:
+          'Models the likelihood ratio of hyperparameter configurations falling into superior performance quantiles (l) versus inferior quantiles (g), concentrating sampling on high-probability improvement regions.',
+      },
+      {
+        title: 'Weighted Probability Ensemble Formulation',
+        formula: 'P_ens(c) = sum(w_k * Softmax(z_k)_c) for k in {DenseNet, Inception, Xception, ViT}',
+        explanation:
+          'Computes final class probabilities through a convex combination of calibrated softmax vectors, where individual model weights sum to 1.0.',
+      },
+    ],
+    codeSnippetTitle: 'model_def.py (Multi-Architecture Loading & Weighted Ensemble Inference)',
+    codeSnippet: `import torch
+import torch.nn as nn
+import timm
+from PIL import Image
+from torchvision import transforms
+
+IMG_SIZE = {
+    "densenet121": 224,
+    "inception_v3": 299,
+    "xception": 299,
+    "vit_scratch": 224,
+}
+CLASS_NAMES = ["benign", "malignant"]
+NUM_CLASSES = 2
+
+class MelanomaEnsemble:
+    """Load ensemble_best.pth and run end-to-end multi-model inference."""
+    def __init__(self, ensemble_path: str, device: str = "cpu"):
+        self.device = torch.device(device)
+        ckpt = torch.load(ensemble_path, map_location=self.device, weights_only=False)
+        self.weights = ckpt["weights"]
+        self.model_keys = ckpt["model_keys"]
+        self.models = {}
+        for key in self.model_keys:
+            model = self.ARCH_BUILDERS[key]()
+            state_dict = self._extract_submodel_state_dict(ckpt["state_dict"], key)
+            model.load_state_dict(state_dict, strict=True)
+            model.to(self.device).eval()
+            self.models[key] = model
+
+    @torch.no_grad()
+    def predict(self, image_path: str):
+        img = Image.open(image_path).convert("RGB")
+        weighted_sum = torch.zeros(NUM_CLASSES)
+        for key, model in self.models.items():
+            x = self.transforms[key](img).unsqueeze(0).to(self.device)
+            probs = torch.softmax(model(x), dim=1).squeeze(0).cpu()
+            weighted_sum += self.weights[key] * probs
+        pred_idx = int(torch.argmax(weighted_sum))
+        return {"prediction": CLASS_NAMES[pred_idx], "confidence": round(float(weighted_sum[pred_idx]), 4)}`,
+    sampleInputHeaders: ['Sample Image', 'Receptive Size', 'Color Space', 'Dermoscopic Marker', 'Clinical Diagnosis'],
+    sampleInputRows: [
+      ['ISIC_0024306.jpg', '224x224 / 299x299 px', 'RGB (ImageNet Norm)', 'Atypical Network, Blue-White Veil', 'Malignant Melanoma'],
+      ['ISIC_0024312.jpg', '224x224 / 299x299 px', 'RGB (ImageNet Norm)', 'Uniform Pigment, Regular Border', 'Benign Nevus'],
+      ['ISIC_0024328.jpg', '224x224 / 299x299 px', 'RGB (ImageNet Norm)', 'Branched Streaks, Asymmetry', 'Malignant Melanoma'],
+    ],
+    sampleOutputHeaders: ['Image ID', 'DenseNet-121', 'InceptionV3', 'Xception', 'ViT-Small/16', 'Ensemble Prediction', 'Ensemble Confidence'],
+    sampleOutputRows: [
+      ['ISIC_0024306.jpg', 'malignant (0.84)', 'malignant (0.89)', 'malignant (0.91)', 'malignant (0.88)', 'malignant', '88.75%'],
+      ['ISIC_0024312.jpg', 'benign (0.95)', 'benign (0.92)', 'benign (0.96)', 'benign (0.94)', 'benign', '94.20%'],
+      ['ISIC_0024328.jpg', 'malignant (0.79)', 'malignant (0.85)', 'malignant (0.88)', 'malignant (0.86)', 'malignant', '84.80%'],
+    ],
+  },
+  {
+    id: 'skin-disease-detection',
+    number: '12',
+    code: '12',
+    title: 'Multiclass Dermatological Disease Classification & Clinical Web App',
+    subtitle: 'End-to-End Deep Learning Classification Across 22 Distinct Skin Disease Categories with Streamlit UI',
+    entity: 'Universitas Muhammadiyah Malang (UMM)',
+    division: 'Informatics • Machine Learning Practicum (UAP)',
+    localPath: 'https://github.com/rofiqsamanhudi/skin-disease-detection',
+    githubUrl: 'https://github.com/rofiqsamanhudi/skin-disease-detection',
+    liveUrl: 'https://skin-disease-detection-sdszshzhy4kvvgmrcxynnq.streamlit.app/',
+    entryFile: 'dashboard/app.py & skindisease.ipynb',
+    environment: 'Python 3.12, PyTorch 2.5.1, Streamlit 1.44.1, OpenCV 4.10+',
+    stack: ['Python 3.12', 'PyTorch', 'Streamlit', 'OpenCV', 'ResNet-101', 'ConvNeXt-Base', 'Image Augmentation'],
+    summary:
+      'Developed a complete machine learning system and interactive Streamlit web application to diagnose 22 categories of skin diseases from dermatological images, benchmarking custom CNN, ResNet-101, and ConvNeXt-Base backbones.',
+    metrics: [
+      { label: 'Disease Classes', value: '22 Clinical Categories' },
+      { label: 'Deployment Platform', value: 'Streamlit Cloud' },
+      { label: 'Evaluated Models', value: 'Custom CNN, ResNet-101, ConvNeXt' },
+    ],
+    problemStatement:
+      'Accurate visual triage across 22 complex skin conditions (including Eczema, Psoriasis, Melanoma, Basal Cell Carcinoma, and Impetigo) requires robust handling of varied lighting, skin tones, and subtle visual demarcations. Deploying models into accessible web interfaces requires lightweight inference without compromising multi-class discriminatory power.',
+    workflowSteps: [
+      {
+        step: '1. Dataset Curation & 22-Class Mapping',
+        detail:
+          'Establishes structured class dictionary mapping lesion categories across inflammatory, viral, fungal, and neoplastic dermatological conditions.',
+      },
+      {
+        step: '2. Preprocessing & Stochastic Data Augmentation',
+        detail:
+          'Applies random rotations, affine translations, color jittering, and Gaussian blur to simulate real-world mobile capture artifacts.',
+      },
+      {
+        step: '3. Multi-Backbone Training & Transfer Learning',
+        detail:
+          'Trains custom CNN architectures alongside deep residual networks (ResNet-101) and modern depthwise-separable ConvNeXt-Base models.',
+      },
+      {
+        step: '4. Model Serialization & Checkpoint Verification',
+        detail:
+          'Validates serialized checkpoint artifacts (.pkl and .pth) with automated attribute integrity checks for head layers and weights.',
+      },
+      {
+        step: '5. Streamlit Cloud UI Deployment',
+        detail:
+          'Implements an accessible web interface featuring real-time image upload, confidence distribution charts, and clinical guidance caveats.',
+      },
+    ],
+    technicalRules: [
+      {
+        title: 'Multi-Class Categorical Cross-Entropy Loss',
+        formula: 'Loss = - sum(y_c * log(p_c)) for c in 1..22',
+        explanation:
+          'Minimizes information divergence between ground-truth one-hot vectors and model probability distributions across 22 diagnostic classes.',
+      },
+      {
+        title: 'Top-k Differential Diagnosis Ranking',
+        formula: 'Rank = argsort(P(y|x)) descending',
+        explanation:
+          'Provides clinicians and educators with primary diagnoses and differential alternatives ranked by softmax confidence scores.',
+      },
+    ],
+    codeSnippetTitle: 'dashboard/app.py (Streamlit Inference & OpenCV Preprocessing)',
+    codeSnippet: `import streamlit as st
+import torch
+import cv2
+import numpy as np
+from PIL import Image
+
+@st.cache_resource
+def load_skin_model():
+    model = torch.load("model/resnet101_skin_disease.pkl", map_location="cpu")
+    if hasattr(model, 'eval'):
+        model.eval()
+    return model
+
+def preprocess_image(image_file):
+    img = Image.open(image_file).convert("RGB")
+    img_np = np.array(img)
+    resized = cv2.resize(img_np, (224, 224))
+    tensor = torch.from_numpy(resized).permute(2, 0, 1).float() / 255.0
+    return tensor.unsqueeze(0)`,
+    sampleInputHeaders: ['Image ID', 'Patient Case', 'Lesion Location', 'Source Resolution', 'Suspected Condition'],
+    sampleInputRows: [
+      ['DERM-2201.jpg', 'Adolescent Male', 'Forearm / Flexor Surface', '512 x 512 px', 'Atopic Dermatitis (Eczema)'],
+      ['DERM-2202.jpg', 'Adult Female', 'Lower Leg / Scaly Plaque', '512 x 512 px', 'Psoriasis Vulgaris'],
+      ['DERM-2203.jpg', 'Elderly Male', 'Facial Sun-Exposed Lesion', '512 x 512 px', 'Basal Cell Carcinoma (BCC)'],
+    ],
+    sampleOutputHeaders: ['Image ID', 'Top Diagnosis', 'Confidence', 'Differential Alternative', 'Confidence 2', 'Triage Status'],
+    sampleOutputRows: [
+      ['DERM-2201.jpg', 'Eczema', '92.40%', 'Seborrheic Dermatitis', '5.10%', 'Inflammatory Lesion'],
+      ['DERM-2202.jpg', 'Psoriasis', '89.15%', 'Lichen Planus', '6.80%', 'Autoimmune Plaque'],
+      ['DERM-2203.jpg', 'Basal Cell Carcinoma', '94.60%', 'Actinic Keratosis', '3.80%', 'Refer to Dermatologist'],
+    ],
+  },
+  {
+    id: 'alzheimer-mri-detection',
+    number: '13',
+    code: '13',
+    title: 'Brain MRI Alzheimer Disease Multiclass Detection & Architecture Benchmarking',
+    subtitle: 'Comparative Study of Classical Feature Descriptors, CNNs, and Vision Transformers with LoRA Fine-Tuning',
+    entity: 'Universitas Muhammadiyah Malang (UMM)',
+    division: 'Informatics • Biomedical Computer Vision & Deep Learning',
+    localPath: 'https://github.com/rofiqsamanhudi/alzheimer-detection',
+    githubUrl: 'https://github.com/rofiqsamanhudi/alzheimer-detection',
+    liveUrl: 'https://alzheimer-detection-rofiqsamanhudi.streamlit.app/',
+    entryFile: 'alzheimer_detection.ipynb & Dashboard/app.py',
+    environment: 'Python, PyTorch, Scikit-Learn, Mahotas, PyWavelets, Streamlit',
+    stack: ['PyTorch', 'Vision Transformer (ViT-B/16)', 'LoRA Fine-Tuning', 'ResNet-50', 'EfficientFormer', 'GLCM / Wavelet / FFT', 'Streamlit'],
+    summary:
+      'Conducted a comprehensive research study detecting 4 Alzheimer stages from brain MRI scans, comparing classical feature extraction (FFT, GLCM, HOG, Hu, LBP, Wavelet, Zernike, GIST) against deep CNNs and Vision Transformers. Achieved 96.57% accuracy with ViT-B/16 and 95.45% accuracy with parameter-efficient LoRA on ResNet-50.',
+    metrics: [
+      { label: 'Top Transformer Accuracy', value: '96.57% (ViT-B/16)' },
+      { label: 'Top LoRA CNN Accuracy', value: '95.45% (ResNet-50 LoRA)' },
+      { label: 'Staging Granularity', value: '4 Alzheimer Stages' },
+    ],
+    problemStatement:
+      'Differentiating subtle brain tissue atrophy across 4 stages of Alzheimer disease (Non-Demented, Very Mild, Mild, Moderate Demented) from MRI scans poses severe diagnostic difficulty. Identifying whether modern Vision Transformers with global self-attention outperform classical texture descriptors or parameter-efficient LoRA adapters is vital for clinical deployment efficiency.',
+    workflowSteps: [
+      {
+        step: '1. Brain MRI Normalization & Skull Stripping Alignment',
+        detail:
+          'Standardizes axial MRI slices, adjusting histogram contrast and removing peripheral background noise.',
+      },
+      {
+        step: '2. Hand-Crafted Classical Feature Extraction',
+        detail:
+          'Extracts spatial and frequency representations across 8 feature domains: FFT 2D, GLCM texture matrices, HOG edge orientations, Hu Moments, Local Binary Patterns, Discrete Wavelet Transform (db4), Zernike radial moments, and GIST descriptors.',
+      },
+      {
+        step: '3. Classical Machine Learning Benchmarking',
+        detail:
+          'Fits ensemble tree classifiers (XGBoost, Random Forest, ExtraTrees) on concatenated feature vectors as baselines.',
+      },
+      {
+        step: '4. Deep CNN & LoRA Adaptation Training',
+        detail:
+          'Trains ResNet-50, EfficientNet, and EfficientFormer backbones, applying Low-Rank Adaptation (LoRA) on attention and dense projection weights to prevent catastrophic forgetting.',
+      },
+      {
+        step: '5. Vision Transformer (ViT-B/16 & Swin-T) Fine-Tuning',
+        detail:
+          'Evaluates global self-attention mechanisms capturing long-range inter-patch anatomical relationships, achieving peak 96.57% accuracy.',
+      },
+    ],
+    technicalRules: [
+      {
+        title: 'LoRA Low-Rank Decomposition Formulation',
+        formula: 'W = W_0 + delta_W = W_0 + (B * A) * (alpha / r)',
+        explanation:
+          'Constrains weight updates to a low-rank bottleneck (rank r << min(d, k)), reducing trainable parameters by over 90% while preventing gradient degradation.',
+      },
+      {
+        title: 'Global Multi-Head Self-Attention in Vision Transformers',
+        formula: 'Attention(Q, K, V) = Softmax((Q * K^T) / sqrt(d_k)) * V',
+        explanation:
+          'Captures pairwise anatomical dependencies across disparate brain MRI patches without inductive bias limitations.',
+      },
+    ],
+    codeSnippetTitle: 'alzheimer_detection.ipynb (Vision Transformer & LoRA Adaptation Setup)',
+    codeSnippet: `import torch
+import timm
+from peft import LoraConfig, get_peft_model
+
+def build_alzheimer_vit_model(num_classes=4):
+    model = timm.create_model("vit_base_patch16_224", pretrained=True, num_classes=num_classes)
+    return model
+
+def build_resnet_lora_model(num_classes=4):
+    base_model = timm.create_model("resnet50", pretrained=True, num_classes=num_classes)
+    lora_config = LoraConfig(
+        r=8,
+        lora_alpha=16,
+        target_modules=["conv1", "conv2", "conv3"],
+        lora_dropout=0.05,
+        bias="none",
+    )
+    return get_peft_model(base_model, lora_config)`,
+    sampleInputHeaders: ['Scan ID', 'MRI Sequence', 'Age Bracket', 'Slice Orientation', 'Ground Truth Stage'],
+    sampleInputRows: [
+      ['MRI-AX-0041', 'T1-Weighted Axial', '70-75 Years', 'Transverse Plane', 'Moderate Demented'],
+      ['MRI-AX-0089', 'T1-Weighted Axial', '65-70 Years', 'Transverse Plane', 'Non-Demented (Control)'],
+      ['MRI-AX-0112', 'T1-Weighted Axial', '68-72 Years', 'Transverse Plane', 'Very Mild Demented'],
+    ],
+    sampleOutputHeaders: ['Model Architecture', 'Tuning Method', 'Accuracy (%)', 'Precision', 'Recall', 'F1-Score'],
+    sampleOutputRows: [
+      ['Vision Transformer (ViT-B/16)', 'Full Fine-Tuning', '96.57%', '0.966', '0.965', '0.965'],
+      ['ResNet-50', 'LoRA Parameter-Efficient', '95.45%', '0.955', '0.954', '0.954'],
+      ['Classical Feature Fusion', 'ExtraTrees Classifier', '88.20%', '0.884', '0.881', '0.882'],
+    ],
+  },
+  {
+    id: 'cbr-putusan-ma',
+    number: '14',
+    code: '14',
+    title: 'Case-Based Reasoning & NLP for Supreme Court Civil Law Decisions',
+    subtitle: 'End-to-End Judicial Decision Extraction, Case Representation, and Legal Precedent Retrieval Engine',
+    entity: 'Universitas Muhammadiyah Malang (UMM)',
+    division: 'Informatics • Legal Natural Language Processing & CBR',
+    localPath: 'https://github.com/rofiqsamanhudi/CBR_putusan-MA',
+    githubUrl: 'https://github.com/rofiqsamanhudi/CBR_putusan-MA',
+    entryFile: 'casebase_build.ipynb',
+    environment: 'Python, Scikit-Learn, Pandas, NLTK/Sastrawi, JupyterLab',
+    stack: ['Python', 'Natural Language Processing (NLP)', 'Case-Based Reasoning (CBR)', 'TF-IDF Vectorizer', 'Cosine Similarity', 'Support Vector Machine (SVM)'],
+    summary:
+      'Built an end-to-end Case-Based Reasoning (CBR) system analyzing Indonesian Supreme Court civil decisions on Perbuatan Melawan Hukum (PMH). Automated document text extraction, legal case indexing, and precedent retrieval, with TF-IDF + Cosine Similarity attaining 90.0% accuracy, 1.00 precision, and 0.947 F1-score.',
+    metrics: [
+      { label: 'Retrieval Accuracy', value: '90.0% (TF-IDF + Cosine)' },
+      { label: 'Retrieval Precision', value: '1.00 (Zero False Positives)' },
+      { label: 'Retrieval F1-Score', value: '0.947' },
+    ],
+    problemStatement:
+      'Indonesian legal research on civil unlawful acts (PMH) requires manual analysis of lengthy, unstructured Supreme Court PDF rulings. Legal analysts and students spend hours identifying precedents matching specific legal disputes, evidence schemas, and damage compensation claims.',
+    workflowSteps: [
+      {
+        step: '1. Supreme Court PDF Ingestion & Scraping',
+        detail:
+          'Extracts raw judicial text from Indonesian Supreme Court civil dispute PDF archives (PMH_PDF/).',
+      },
+      {
+        step: '2. Legal Text Normalization & Information Extraction',
+        detail:
+          'Cleans boilerplate procedural clauses, segmenting legal facts (posita), causes of action, and judicial rulings (petitum).',
+      },
+      {
+        step: '3. Case Base Representation & Indexing',
+        detail:
+          'Constructs structured legal case profiles and computes n-gram TF-IDF representations weighted by legal domain terms.',
+      },
+      {
+        step: '4. Case Retrieval & Precedent Matching',
+        detail:
+          'Evaluates new query cases against the historic case base comparing TF-IDF + Cosine Similarity versus Support Vector Machine (SVM) classification.',
+      },
+      {
+        step: '5. Solution Recommendation & Model Serialization',
+        detail:
+          'Recommends legal outcomes with historical case precedents, exporting serialized models 03_retrieval_model.pkl and 03_vectorizer.pkl.',
+      },
+    ],
+    technicalRules: [
+      {
+        title: 'TF-IDF Term Weighting for Legal Documents',
+        formula: 'TF-IDF(t, d, D) = TF(t, d) * log(|D| / (1 + |{d in D : t in d}|))',
+        explanation:
+          'Downweights ubiquitous statutory legal phrases while amplifying distinctive case facts and disputed damage claims.',
+      },
+      {
+        title: 'Cosine Similarity Precedent Metric',
+        formula: 'Cosine Similarity = (q . c) / (||q|| * ||c||)',
+        explanation:
+          'Calculates geometric angular similarity between query case representation vectors and historic precedent vectors in sparse feature space.',
+      },
+    ],
+    codeSnippetTitle: 'casebase_build.ipynb (Case Retrieval Engine & Vectorizer Scoring)',
+    codeSnippet: `import pickle
+from sklearn.metrics.pairwise import cosine_similarity
+
+with open("03_vectorizer.pkl", "rb") as f:
+    vectorizer = pickle.load(f)
+with open("03_retrieval_model.pkl", "rb") as f:
+    casebase = pickle.load(f)
+
+def retrieve_similar_precedents(query_posita_text, top_k=3):
+    query_vec = vectorizer.transform([query_posita_text])
+    sim_scores = cosine_similarity(query_vec, casebase["tfidf_matrix"]).flatten()
+    top_indices = sim_scores.argsort()[::-1][:top_k]
+    
+    results = []
+    for idx in top_indices:
+        results.append({
+            "putusan_id": casebase["case_ids"][idx],
+            "similarity": float(sim_scores[idx]),
+            "amar_putusan": casebase["verdicts"][idx]
+        })
+    return results`,
+    sampleInputHeaders: ['Case Number', 'Dispute Category', 'Key Legal Facts (Posita)', 'Claimed Damage (IDR)', 'Disputed Assets'],
+    sampleInputRows: [
+      ['521 K/Pdt/2023', 'PMH - Sengketa Tanah', 'Penguasaan tanah tanpa hak dan penerbitan sertifikat ganda', 'Rp 2,500,000,000', 'SHM No. 412/Malang'],
+      ['814 K/Pdt/2022', 'PMH - Kerusakan Lingkungan', 'Pencemaran limbah industri yang merugikan lahan pertanian', 'Rp 750,000,000', 'Lahan Sawah 4.5 Ha'],
+      ['302 K/Pdt/2024', 'PMH - Pengrusakan Properti', 'Pembongkaran sepihak bangunan ruko komersial', 'Rp 1,200,000,000', 'Bangunan Ruko 2 Lantai'],
+    ],
+    sampleOutputHeaders: ['Model Approach', 'Accuracy', 'Precision', 'Recall', 'F1-Score', 'Judicial Suitability'],
+    sampleOutputRows: [
+      ['TF-IDF + Cosine Similarity', '0.900', '1.000', '0.900', '0.947', 'Optimal for Precedent Retrieval'],
+      ['TF-IDF + SVM Classifier', '0.850', '0.875', '0.850', '0.862', 'Reliable for Verdict Classification'],
+    ],
+  },
+];
+
 export const ALL_CASES = [
   ...PYTHON_SYSTEMS.map((s, idx) => ({
     ...s,
@@ -956,6 +1367,12 @@ export const ALL_CASES = [
     groupType: 'web',
     number: String(PYTHON_SYSTEMS.length + idx + 1).padStart(2, '0'),
     code: String(PYTHON_SYSTEMS.length + idx + 1).padStart(2, '0'),
+  })),
+  ...ACADEMIC_SYSTEMS.map((s, idx) => ({
+    ...s,
+    groupType: 'academic',
+    number: String(PYTHON_SYSTEMS.length + WEB_SYSTEMS.length + idx + 1).padStart(2, '0'),
+    code: String(PYTHON_SYSTEMS.length + WEB_SYSTEMS.length + idx + 1).padStart(2, '0'),
   })),
 ];
 
