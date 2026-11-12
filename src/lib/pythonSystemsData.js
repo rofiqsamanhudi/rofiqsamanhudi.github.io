@@ -846,7 +846,7 @@ export const PROFILE_DATA = {
     landscape: '/profile/foto-bromo.jpeg',
   },
   summary:
-    'Informatics graduate specializing in Data Science from Universitas Muhammadiyah Malang (GPA 3.82 / 4.00). Bridges quantitative research rigor with practical data engineering, from statistical classification and hypothesis testing to automated Python ETL pipelines, SQL data modeling, and executive Looker Studio dashboards. Proven track record in multi-channel e-commerce data consolidation, demand forecasting, and operational reconciliation.',
+    'Informatics student specializing in Data Science at Universitas Muhammadiyah Malang (GPA 3.82 / 4.00). Bridges quantitative research rigor with practical data engineering, from statistical classification and hypothesis testing to automated Python ETL pipelines, SQL data modeling, and executive Looker Studio dashboards. Proven track record in multi-channel e-commerce data consolidation, demand forecasting, and operational reconciliation.',
   skillGroups: [
     {
       category: 'Statistical Research & Quantitative Analysis',
@@ -920,11 +920,11 @@ export const PROFILE_DATA = {
   ],
   education: {
     institution: 'Universitas Muhammadiyah Malang (UMM)',
-    degree: 'Bachelor of Science in Informatics (Data Science Concentration)',
+    degree: 'Informatics (Data Science Specialization)',
     gpa: '3.82 / 4.00',
     period: '2022 - 2026',
     details: [
-      'Academic Focus: Specialized in Data Science, focusing on quantitative research, statistical analysis, database architecture, and machine learning.',
+      'Academic Major: Informatics with specialization in Data Science, focusing on quantitative research, statistical analysis, database architecture, and machine learning.',
       'Relevant Coursework: Relational Databases (SQL), Data Mining, Machine Learning, and Probability & Statistics.',
       'Campus Leadership: Selected as Teaching Assistant for Basic Digital Technology Training (PDTD) under Biro Infokom Universitas Muhammadiyah Malang, mentoring students in Python.',
     ],

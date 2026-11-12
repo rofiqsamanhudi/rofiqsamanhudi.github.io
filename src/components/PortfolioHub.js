@@ -226,7 +226,7 @@ export default function PortfolioHub() {
               </div>
 
               <p className="mn-hero-summary">
-                Informatics graduate (Data Science Concentration) from Universitas Muhammadiyah Malang. Focused on quantitative research, statistical classification, Python and R data analysis, automated ETL pipelines, and structured business dashboards.
+                Informatics student specializing in Data Science at Universitas Muhammadiyah Malang. Focused on quantitative research, statistical classification, Python and R data analysis, automated ETL pipelines, and structured business dashboards.
               </p>
 
               <div className="mn-hero-cta">
@@ -292,7 +292,7 @@ export default function PortfolioHub() {
               {/* Left Column: Narrative & Focus Pillars */}
               <div className="mn-about-narrative-col">
                 <p className="mn-about-lead">
-                  I am a Research &amp; Data Analyst with a quantitative foundation in Data Science from Universitas Muhammadiyah Malang. I specialize in structuring complex transactional data into verifiable analytical models, from exploratory hypothesis testing to multi-class statistical classification.
+                  I am an Informatics student specializing in Data Science at Universitas Muhammadiyah Malang. I specialize in structuring complex transactional data into verifiable analytical models, from exploratory hypothesis testing to statistical classification, SQL data modeling, and automated ETL pipelines.
                 </p>
 
                 <p className="mn-about-body">
