@@ -16,6 +16,7 @@ export default function PortfolioHub() {
   const [activeSection, setActiveSection] = useState('home');
   const [projectFilter, setProjectFilter] = useState('all');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [contactInView, setContactInView] = useState(false);
 
   // Filter projects by category: all, python, web, academic
   const filteredProjects = ALL_CASES.filter((p) => {
@@ -24,6 +25,22 @@ export default function PortfolioHub() {
     if (projectFilter === 'academic') return p.groupType === 'academic';
     return true;
   });
+
+  // Observer to smoothly slide out floating dock when Contact section is in view
+  useEffect(() => {
+    const contactEl = document.getElementById('contact');
+    if (!contactEl) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setContactInView(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(contactEl);
+    return () => observer.disconnect();
+  }, []);
 
   // Scroll spy to highlight active nav link
   useEffect(() => {
@@ -151,8 +168,8 @@ export default function PortfolioHub() {
         )}
       </header>
 
-      {/* FLOATING RIGHT SOCIAL BUBBLES (4 BUBBLES) */}
-      <aside className="mn-floating-dock" aria-label="Direct Contact">
+      {/* FLOATING RIGHT SOCIAL BUBBLES */}
+      <aside className={`mn-floating-dock ${contactInView ? 'hidden-dock' : ''}`} aria-label="Direct Contact">
         <a
           href={PROFILE_DATA.linkedinUrl}
           target="_blank"
@@ -269,7 +286,7 @@ export default function PortfolioHub() {
 
               <div className="mn-hero-highlights">
                 <div className="mn-highlight-item">
-                  <strong>10 Projects</strong>
+                  <strong>10+ Projects</strong>
                   <span>Completed Systems</span>
                 </div>
                 <span className="mn-highlight-sep">&bull;</span>
@@ -365,10 +382,10 @@ export default function PortfolioHub() {
 
                 <div className="mn-impact-card">
                   <div className="mn-impact-badge">Track Record</div>
-                  <div className="mn-impact-stat">10 Projects</div>
+                  <div className="mn-impact-stat">10+ Projects</div>
                   <div className="mn-impact-title">Practical Systems Built</div>
                   <p className="mn-impact-desc">
-                    Engineered operational solutions across factory demand forecasting, multi-channel marketplace data consolidation, warehouse inventory reconciliations, and tax data converters.
+                    Engineered operational solutions across factory demand forecasting, multi-channel data consolidation, warehouse reconciliations, and machine learning research models.
                   </p>
                 </div>
               </div>
@@ -407,7 +424,7 @@ export default function PortfolioHub() {
                   onClick={() => setProjectFilter('python')}
                   className={`mn-filter-btn ${projectFilter === 'python' ? 'active' : ''}`}
                 >
-                  Corporate Python ({PYTHON_SYSTEMS.length})
+                  Python Pipelines ({PYTHON_SYSTEMS.length})
                 </button>
                 <button
                   type="button"
@@ -416,7 +433,7 @@ export default function PortfolioHub() {
                   onClick={() => setProjectFilter('web')}
                   className={`mn-filter-btn ${projectFilter === 'web' ? 'active' : ''}`}
                 >
-                  Corporate Web ({WEB_SYSTEMS.length})
+                  Web &amp; Analytics ({WEB_SYSTEMS.length})
                 </button>
                 <button
                   type="button"
@@ -425,7 +442,7 @@ export default function PortfolioHub() {
                   onClick={() => setProjectFilter('academic')}
                   className={`mn-filter-btn ${projectFilter === 'academic' ? 'active' : ''}`}
                 >
-                  Academic Research ({ACADEMIC_SYSTEMS.length})
+                  Machine Learning &amp; AI ({ACADEMIC_SYSTEMS.length})
                 </button>
               </div>
             </div>
@@ -433,13 +450,13 @@ export default function PortfolioHub() {
             {/* High-Craft Architectural Showcase Cards */}
             <div className="mn-projects-grid">
               {filteredProjects.map((item) => {
-                const caseHref = `/kasus/${item.id}`;
+                const caseHref = `/projects/${item.id}`;
                 const badgeLabel =
                   item.groupType === 'python'
-                    ? 'Corporate Pipeline'
+                    ? 'Python Pipeline'
                     : item.groupType === 'web'
-                    ? 'Corporate Web'
-                    : 'Academic Research';
+                    ? 'Web & Analytics'
+                    : 'Machine Learning & AI';
                 const challengeLabel =
                   item.groupType === 'academic'
                     ? 'Research & Engineering Challenge'

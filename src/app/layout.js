@@ -1,9 +1,21 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Rofiq Samanhudi | Research & Data Analyst, Data Engineer Portfolio',
-  description:
-    'Professional portfolio of Rofiq Samanhudi, Research & Data Analyst and Data Engineer. Featuring technical documentation on automated ETL pipelines, statistical modeling, operational reconciliation, and analytical dashboards.',
+  title: 'Rofiq Samanhudi | Portfolio',
+  description: 'Data engineering, automation pipelines, and machine learning projects.',
+  openGraph: {
+    title: 'Rofiq Samanhudi | Portfolio',
+    description: 'Data engineering, automation pipelines, and machine learning projects.',
+    url: 'https://rofiqsamanhudi.github.io',
+    siteName: 'Rofiq Samanhudi Portfolio',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Rofiq Samanhudi | Portfolio',
+    description: 'Data engineering, automation pipelines, and machine learning projects.',
+  },
 };
 
 export default function RootLayout({ children }) {

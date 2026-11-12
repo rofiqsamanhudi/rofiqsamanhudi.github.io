@@ -105,7 +105,7 @@ def get_bb_category(item_code_or_name):
     ],
   },
   {
-    id: 'laporan-kardus-fg',
+    id: 'packaging-box-automation',
     number: '02',
     title: 'Packaging Box Automation & Logistics FG Recap',
     subtitle: 'Marketplace Packaging Box Rule Engine & Finished Goods Revenue Aggregator',
@@ -203,7 +203,7 @@ def get_bb_category(item_code_or_name):
     ],
   },
   {
-    id: 'rekonsiliasi-stok-rak',
+    id: 'warehouse-stock-reconciliation',
     number: '03',
     title: 'Physical Warehouse Rack Stock Reconciliation',
     subtitle: 'Field Stock-Count Audit Engine & Paired Double-Entry Mutation Generator (11 Columns)',
@@ -301,9 +301,9 @@ for (nama, exp), qty_act in act_items.items():
     ],
   },
   {
-    id: 'penyesuaian-bb',
+    id: 'raw-material-adjustment',
     number: '04',
-    title: 'Raw Material Inventory Adjustment System (Penyesuaian BB)',
+    title: 'Raw Material Inventory Adjustment & Discrepancy Classifier',
     subtitle: 'Automated 4-File Monthly Item Adjustment Generator (Wet, Dry & Production)',
     entity: 'PT. Kilap Global Group (KGG)',
     division: 'Inventory Accounting & Raw Material Warehousing',
@@ -881,6 +881,7 @@ export const PROFILE_DATA = {
         'Looker Studio',
         'Data Visualization (Matplotlib)',
         'Next.js & React',
+        'Vercel (Hosting & Deployment)',
         'DJP CoreTax XML',
       ],
     },
@@ -1257,7 +1258,7 @@ def build_resnet_lora_model(num_classes=4):
     ],
   },
   {
-    id: 'cbr-putusan-ma',
+    id: 'cbr-supreme-court-precedents',
     number: '14',
     code: '14',
     title: 'Case-Based Reasoning & NLP for Supreme Court Civil Law Decisions',
