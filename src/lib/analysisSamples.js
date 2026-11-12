@@ -73,7 +73,7 @@ export const ANALYSIS_SAMPLES = [
     context:
       'Evaluasi error peramalan (Mean Absolute Percentage Error / MAPE) pada 5 SKU utama selama transisi kampanye penjualan bulanan menggunakan bobot WMA (0,2; 0,3; 0,5).',
     datasetBadge: 'Data Simulasi',
-    tools: ['Python', 'NumPy', 'Decimal (ROUND_HALF_UP)'],
+    tools: ['Python', 'NumPy', 'Decimal'],
     unitLabel: 'Selisih Peramalan terhadap Penjualan Aktual (MAPE %)',
     thresholdLabel: 'Target Error Maksimum PPIC: 10,0%',
     thresholdValue: 10.0,

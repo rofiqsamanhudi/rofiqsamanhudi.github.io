@@ -182,6 +182,21 @@ export default function PortfolioHub() {
         </a>
 
         <a
+          href={PROFILE_DATA.instagramUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mn-dock-bubble"
+          aria-label={`Instagram: ${PROFILE_DATA.instagramHandle}`}
+          title={`Instagram: ${PROFILE_DATA.instagramHandle}`}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+          </svg>
+        </a>
+
+        <a
           href={PROFILE_DATA.whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
@@ -657,50 +672,108 @@ export default function PortfolioHub() {
               Open to career opportunities as a Research &amp; Data Analyst and Data Engineer, data automation initiatives, and collaborative technical projects.
             </p>
 
-            <div className="mn-contact-cards">
-              <a href={`mailto:${PROFILE_DATA.email}`} className="mn-contact-card">
-                <div className="mn-contact-icon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <rect width="20" height="16" x="2" y="4" rx="2" />
-                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                  </svg>
-                </div>
-                <div className="mn-contact-label">Email</div>
-                <div className="mn-contact-val">{PROFILE_DATA.email}</div>
-              </a>
+            <div className="mn-contact-grid">
+              {/* Row 1: Direct Communication Channels */}
+              <div className="mn-contact-row-primary">
+                <a href={`mailto:${PROFILE_DATA.email}`} className="mn-contact-card">
+                  <div className="mn-contact-card-top">
+                    <div className="mn-contact-icon-badge">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <rect width="20" height="16" x="2" y="4" rx="2" />
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                      </svg>
+                    </div>
+                    <span className="mn-contact-arrow" aria-hidden="true">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                      </svg>
+                    </span>
+                  </div>
+                  <div className="mn-contact-label">Email</div>
+                  <div className="mn-contact-val">{PROFILE_DATA.email}</div>
+                </a>
 
-              <a href={PROFILE_DATA.whatsappUrl} target="_blank" rel="noopener noreferrer" className="mn-contact-card">
-                <div className="mn-contact-icon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                  </svg>
-                </div>
-                <div className="mn-contact-label">WhatsApp</div>
-                <div className="mn-contact-val">{PROFILE_DATA.phoneDisplay}</div>
-              </a>
+                <a href={PROFILE_DATA.whatsappUrl} target="_blank" rel="noopener noreferrer" className="mn-contact-card">
+                  <div className="mn-contact-card-top">
+                    <div className="mn-contact-icon-badge">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                      </svg>
+                    </div>
+                    <span className="mn-contact-arrow" aria-hidden="true">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                      </svg>
+                    </span>
+                  </div>
+                  <div className="mn-contact-label">WhatsApp</div>
+                  <div className="mn-contact-val">{PROFILE_DATA.phoneDisplay}</div>
+                </a>
+              </div>
 
-              <a href={PROFILE_DATA.linkedinUrl} target="_blank" rel="noopener noreferrer" className="mn-contact-card">
-                <div className="mn-contact-icon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                    <rect width="4" height="12" x="2" y="9" />
-                    <circle cx="4" cy="4" r="2" />
-                  </svg>
-                </div>
-                <div className="mn-contact-label">LinkedIn</div>
-                <div className="mn-contact-val">in/rofiqsamanhudi</div>
-              </a>
+              {/* Row 2: Professional Profiles & Socials */}
+              <div className="mn-contact-row-secondary">
+                <a href={PROFILE_DATA.linkedinUrl} target="_blank" rel="noopener noreferrer" className="mn-contact-card">
+                  <div className="mn-contact-card-top">
+                    <div className="mn-contact-icon-badge">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                        <rect width="4" height="12" x="2" y="9" />
+                        <circle cx="4" cy="4" r="2" />
+                      </svg>
+                    </div>
+                    <span className="mn-contact-arrow" aria-hidden="true">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                      </svg>
+                    </span>
+                  </div>
+                  <div className="mn-contact-label">LinkedIn</div>
+                  <div className="mn-contact-val">in/rofiqsamanhudi</div>
+                </a>
 
-              <a href={PROFILE_DATA.githubUrl} target="_blank" rel="noopener noreferrer" className="mn-contact-card">
-                <div className="mn-contact-icon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                    <path d="M9 18c-4.51 2-5-2-7-2" />
-                  </svg>
-                </div>
-                <div className="mn-contact-label">GitHub</div>
-                <div className="mn-contact-val">github.com/rofiqsamanhudi</div>
-              </a>
+                <a href={PROFILE_DATA.githubUrl} target="_blank" rel="noopener noreferrer" className="mn-contact-card">
+                  <div className="mn-contact-card-top">
+                    <div className="mn-contact-icon-badge">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                        <path d="M9 18c-4.51 2-5-2-7-2" />
+                      </svg>
+                    </div>
+                    <span className="mn-contact-arrow" aria-hidden="true">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                      </svg>
+                    </span>
+                  </div>
+                  <div className="mn-contact-label">GitHub</div>
+                  <div className="mn-contact-val">github.com/rofiqsamanhudi</div>
+                </a>
+
+                <a href={PROFILE_DATA.instagramUrl} target="_blank" rel="noopener noreferrer" className="mn-contact-card">
+                  <div className="mn-contact-card-top">
+                    <div className="mn-contact-icon-badge">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                      </svg>
+                    </div>
+                    <span className="mn-contact-arrow" aria-hidden="true">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                      </svg>
+                    </span>
+                  </div>
+                  <div className="mn-contact-label">Instagram</div>
+                  <div className="mn-contact-val">{PROFILE_DATA.instagramHandle}</div>
+                </a>
+              </div>
             </div>
 
             <div className="mn-contact-cta">
@@ -726,7 +799,10 @@ export default function PortfolioHub() {
       <footer className="mn-footer">
         <div className="mn-container mn-footer-flex">
           <div className="mn-footer-left">
-            <span className="mn-footer-brand">R.</span>
+            <span className="mn-footer-brand">
+              <span className="mn-brand-luxury">Fiq</span>
+              <span className="mn-brand-dot">.</span>
+            </span>
             <span>Rofiq Samanhudi &bull; Research &amp; Data Analyst | Data Engineer</span>
           </div>
           <div className="mn-footer-right">

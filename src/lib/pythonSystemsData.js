@@ -13,13 +13,13 @@ export const PYTHON_SYSTEMS = [
     localPath: 'C:\\Rofiq\\KGG\\Project\\Forecast FG',
     entryFile: 'Perencanaan Produksi FG.ipynb',
     environment: 'Python 3.11, Google Colaboratory & JupyterLab',
-    stack: ['Python', 'Pandas', 'NumPy', 'Decimal (ROUND_HALF_UP)', 'OpenPyXL', 'Matplotlib', 'Google Sheets Live CSV'],
+    stack: ['Python', 'Pandas', 'NumPy', 'OpenPyXL', 'Matplotlib', 'Google Sheets Live CSV'],
     summary:
-      'Automated 3-month rolling production forecasts across 7 brand lines by synthesizing historical Weighted Moving Average (WMA) trends, factory capacity buffers, and direct sales requests, subsequently breaking down targets into packaging component counts and chemical liquid volume.',
+      'Automated 3-month rolling production forecasts across 7 brand lines by synthesizing historical demand trends, factory capacity buffers, and direct sales requests, subsequently breaking down targets into packaging component counts and chemical liquid volume.',
     metrics: [
       { label: 'Brand Scope', value: '7 Corporate Brands' },
       { label: 'Projection Horizon', value: '3 Months Rolling' },
-      { label: 'Rounding Method', value: 'ROUND_HALF_UP (Excel Parity)' },
+      { label: 'Precision Standard', value: 'Exact Mathematical Rounding' },
     ],
     problemStatement:
       'Monthly production planning was previously managed through disconnected spreadsheets. Decimal rounding discrepancies between sales projections, plant buffers, and multi-level Bill of Materials (BOM) led to recurring variances in ordering bottles, trigger caps, labels, boxes, and bulk liquids.',
@@ -494,8 +494,8 @@ gabungan.loc[gabungan['sku_v3'].str.contains('PF', case=False, na=False), 'brand
 export const WEB_SYSTEMS = [
   {
     id: 'dashboard-finance',
-    number: '01',
-    code: 'WEB-01',
+    number: '06',
+    code: '06',
     title: 'Executive Financial Control & Multi-Entity Cash Flow',
     subtitle: 'Corporate Budget Consolidation, Cash Flow Monitoring & Departmental Expense Analytics',
     entity: 'PT Kilapkan Seluruh Bangsa & PT. Kilap Global Group',
@@ -561,8 +561,8 @@ export const WEB_SYSTEMS = [
   },
   {
     id: 'dashboard-hr',
-    number: '02',
-    code: 'WEB-02',
+    number: '07',
+    code: '07',
     title: 'HR & Talent Acquisition Portal',
     subtitle: 'Integrated Kanban Recruitment Pipeline & Candidate Resume Parser',
     entity: 'PT. Kilap Global Group',
@@ -626,8 +626,8 @@ export const WEB_SYSTEMS = [
   },
   {
     id: 'costmatrix',
-    number: '03',
-    code: 'WEB-03',
+    number: '08',
+    code: '08',
     title: 'CostMatrix & Manufacturing Cost (COGS) Tracker',
     subtitle: 'Multi-Level BOM Cost of Goods Sold Calculator & Chemical Formulation Margin Simulator',
     entity: 'PT Kilapkan Seluruh Bangsa & PT. Kilap Global Group',
@@ -691,8 +691,8 @@ export const WEB_SYSTEMS = [
   },
   {
     id: 'coretax-converter',
-    number: '04',
-    code: 'WEB-04',
+    number: '09',
+    code: '09',
     title: 'CoreTax Enterprise XML & CSV Converter',
     subtitle: 'Commercial Invoice to Indonesian Tax Authority (DJP) CoreTax v1.6.1 XML Converter',
     entity: 'PT. Kilap Global Group & PT Kilapkan Seluruh Bangsa',
@@ -756,8 +756,8 @@ export const WEB_SYSTEMS = [
   },
   {
     id: 'kopaskap-converter',
-    number: '05',
-    code: 'WEB-05',
+    number: '10',
+    code: '10',
     title: 'Kopaskap Creator Affiliate Analyzer',
     subtitle: 'Affiliate Video Performance Analytics & 6-Tier Commission Engine',
     entity: 'PT. Kilap Global Group',
@@ -855,6 +855,7 @@ export const PROFILE_DATA = {
         'Pandas & NumPy',
         'ETL Pipelines',
         'OpenPyXL (Excel Automation)',
+        'Google Apps Script',
         'Data Cleaning & Regex',
         'Google Sheets API',
       ],
@@ -863,7 +864,7 @@ export const PROFILE_DATA = {
       category: 'Analysis & Operations',
       items: [
         'Exploratory Data Analysis (EDA)',
-        'Demand Forecasting (WMA)',
+        'Demand Forecasting',
         'Bill of Materials (BOM)',
         'Inventory Reconciliation',
         'Multi-Channel Sales Aggregation',
@@ -874,6 +875,7 @@ export const PROFILE_DATA = {
       category: 'Database & Visualization',
       items: [
         'SQL (MySQL)',
+        'Google BigQuery',
         'Advanced Excel & Pivot Tables',
         'Looker Studio',
         'Data Visualization (Matplotlib)',
@@ -943,8 +945,18 @@ export const PROFILE_DATA = {
 };
 
 export const ALL_CASES = [
-  ...PYTHON_SYSTEMS.map((s) => ({ ...s, groupType: 'python', code: s.code || `PY-${s.number}` })),
-  ...WEB_SYSTEMS.map((s) => ({ ...s, groupType: 'web', code: s.code || `WEB-${s.number}` })),
+  ...PYTHON_SYSTEMS.map((s, idx) => ({
+    ...s,
+    groupType: 'python',
+    number: String(idx + 1).padStart(2, '0'),
+    code: String(idx + 1).padStart(2, '0'),
+  })),
+  ...WEB_SYSTEMS.map((s, idx) => ({
+    ...s,
+    groupType: 'web',
+    number: String(PYTHON_SYSTEMS.length + idx + 1).padStart(2, '0'),
+    code: String(PYTHON_SYSTEMS.length + idx + 1).padStart(2, '0'),
+  })),
 ];
 
 

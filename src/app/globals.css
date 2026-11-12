@@ -1512,55 +1512,106 @@ button:focus-visible,
   font-size: 15.5px;
   color: var(--text-2);
   line-height: 1.6;
-  margin-bottom: 36px;
+  margin-bottom: 40px;
 }
 
-.mn-contact-cards {
+.mn-contact-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.mn-contact-row-primary {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  margin-bottom: 36px;
-  text-align: left;
+}
+
+.mn-contact-row-secondary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
 
 .mn-contact-card {
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  border-radius: 12px;
-  background-color: var(--bg);
-  border: 1px solid var(--line);
+  align-items: flex-start;
+  text-align: left;
+  padding: 22px 24px;
+  border-radius: 16px;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
   text-decoration: none;
   color: var(--text);
-  transition: all 0.15s ease;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s ease,
+              border-color 0.2s ease;
+  position: relative;
 }
 
 .mn-contact-card:hover {
-  background-color: #ffffff;
-  border-color: #a1a1aa;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.18);
 }
 
-.mn-contact-icon {
+.mn-contact-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.mn-contact-icon-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background-color: var(--bg);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--text);
-  margin-bottom: 10px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.mn-contact-card:hover .mn-contact-icon-badge {
+  background-color: var(--text);
+  color: #ffffff;
+}
+
+.mn-contact-arrow {
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.mn-contact-card:hover .mn-contact-arrow {
+  color: var(--text);
+  transform: translate(2px, -2px);
 }
 
 .mn-contact-label {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 2px;
+  letter-spacing: 0.6px;
+  margin-bottom: 4px;
 }
 
 .mn-contact-val {
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 700;
   color: var(--text);
   word-break: break-all;
+  line-height: 1.35;
 }
 
 .mn-contact-cta {
@@ -1573,8 +1624,9 @@ button:focus-visible,
   font-size: 14.5px;
 }
 
-@media (max-width: 640px) {
-  .mn-contact-cards {
+@media (max-width: 768px) {
+  .mn-contact-row-primary,
+  .mn-contact-row-secondary {
     grid-template-columns: 1fr;
   }
 }
@@ -1583,9 +1635,10 @@ button:focus-visible,
    FOOTER
    ========================================================================== */
 .mn-footer {
-  padding: 30px 0;
-  border-top: 1px solid var(--line);
-  background-color: #ffffff;
+  padding: 38px 0;
+  border-top: 1px solid #222225;
+  background-color: #111113;
+  color: #ffffff;
 }
 
 .mn-footer-flex {
@@ -1593,27 +1646,32 @@ button:focus-visible,
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 16px;
 }
 
 .mn-footer-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   font-size: 13px;
-  color: var(--text);
-  font-weight: 600;
+  color: #d4d4d8;
+  font-weight: 500;
 }
 
 .mn-footer-brand {
-  font-size: 18px;
-  font-weight: 900;
-  letter-spacing: -0.5px;
+  display: inline-flex;
+  align-items: baseline;
+  line-height: 1;
+}
+
+.mn-footer-brand .mn-brand-luxury {
+  color: #ffffff;
+  font-size: 20px;
 }
 
 .mn-footer-right {
   font-size: 12px;
-  color: var(--text-muted);
+  color: #a1a1aa;
 }
 
 /* ==========================================================================
