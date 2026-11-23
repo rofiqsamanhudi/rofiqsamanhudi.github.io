@@ -299,6 +299,8 @@ button:focus-visible,
   display: none;
   background: none;
   border: none;
+  min-width: 44px;
+  min-height: 44px;
   padding: 6px;
   color: var(--text);
   cursor: pointer;
@@ -351,6 +353,9 @@ button:focus-visible,
     box-shadow: 0 14px 40px rgba(0, 0, 0, 0.1);
   }
   .mn-mobile-link {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
     padding: 10px 14px;
     font-size: 13.5px;
     font-weight: 600;
@@ -422,16 +427,14 @@ button:focus-visible,
     gap: 8px;
   }
   .mn-dock-bubble {
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
   }
 }
 
-/* ==========================================================================
-   HERO SECTION - SPLIT EDITORIAL SHOWCASE (OPTION 1)
-   ========================================================================== */
+/* Hero section */
 .mn-hero-section {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -869,10 +872,11 @@ button:focus-visible,
 
 .mn-filter-tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   background-color: #ffffff;
   padding: 4px;
-  border-radius: 9999px;
+  border-radius: 20px;
   border: 1px solid var(--line);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
 }
@@ -880,6 +884,7 @@ button:focus-visible,
 .mn-filter-btn {
   background: none;
   border: none;
+  min-height: 40px;
   padding: 8px 18px;
   font-size: 12.5px;
   font-weight: 600;

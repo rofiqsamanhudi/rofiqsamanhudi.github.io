@@ -839,12 +839,6 @@ export const PROFILE_DATA = {
   instagramUrl: 'https://www.instagram.com/rofiqsamanhudi_/',
   instagramHandle: '@rofiqsamanhudi_',
   cvPdfUrl: '/profile/CV-Rofiq-Samanhudi-Research-and-Data-Analyst.pdf',
-  photos: {
-    casual: '/profile/foto-casual.jpeg',
-    formal: '/profile/foto-formal.jpg',
-    profile: '/profile/foto-profil.jpg',
-    landscape: '/profile/foto-bromo.jpeg',
-  },
   summary:
     'Informatics student specializing in Data Science at Universitas Muhammadiyah Malang (GPA 3.82 / 4.00). Bridges quantitative research rigor with practical data engineering, from statistical classification and hypothesis testing to automated Python ETL pipelines, SQL data modeling, and executive Looker Studio dashboards. Proven track record in multi-channel e-commerce data consolidation, demand forecasting, and operational reconciliation.',
   skillGroups: [
@@ -879,6 +873,7 @@ export const PROFILE_DATA = {
         'Google BigQuery',
         'Advanced Excel & Pivot Tables',
         'Looker Studio',
+        'Streamlit',
         'Data Visualization (Matplotlib)',
         'Next.js & React',
         'Vercel (Hosting & Deployment)',
