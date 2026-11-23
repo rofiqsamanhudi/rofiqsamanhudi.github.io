@@ -17,6 +17,35 @@ export default function PortfolioHub() {
   const [projectFilter, setProjectFilter] = useState('all');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [contactInView, setContactInView] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState(null);
+
+  const selectedIndex = selectedProjectId
+    ? filteredProjects.findIndex((p) => p.id === selectedProjectId)
+    : -1;
+  const selectedProject = selectedIndex >= 0 ? filteredProjects[selectedIndex] : null;
+  const prevProject = selectedIndex > 0 ? filteredProjects[selectedIndex - 1] : null;
+  const nextProject =
+    selectedIndex >= 0 && selectedIndex < filteredProjects.length - 1
+      ? filteredProjects[selectedIndex + 1]
+      : null;
+
+  // Close project drawer on Escape and lock background scroll while open
+  useEffect(() => {
+    if (!selectedProject) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setSelectedProjectId(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedProject]);
 
   // Filter projects by category: all, python, web, academic
   const filteredProjects = ALL_CASES.filter((p) => {
@@ -259,7 +288,7 @@ export default function PortfolioHub() {
               </div>
 
               <p className="mn-hero-summary">
-                Informatics student specializing in Data Science at Universitas Muhammadiyah Malang. Focused on quantitative research, statistical classification, Python and R data analysis, automated ETL pipelines, and structured business dashboards.
+                Informatics graduate specializing in Data Science from Universitas Muhammadiyah Malang. Focused on quantitative research, statistical classification, Python and R data analysis, automated ETL/ELT pipelines, and structured business dashboards.
               </p>
 
               <div className="mn-hero-cta">
@@ -286,8 +315,8 @@ export default function PortfolioHub() {
 
               <div className="mn-hero-highlights">
                 <div className="mn-highlight-item">
-                  <strong>10+ Projects</strong>
-                  <span>Completed Systems</span>
+                  <strong>{ALL_CASES.length > 0 ? `${ALL_CASES.length} ${ALL_CASES.length === 1 ? 'Project' : 'Projects'}` : 'In Progress'}</strong>
+                  <span>{ALL_CASES.length > 0 ? 'Documented Systems' : 'Curating Case Studies'}</span>
                 </div>
                 <span className="mn-highlight-sep">&bull;</span>
                 <div className="mn-highlight-item">
@@ -325,7 +354,7 @@ export default function PortfolioHub() {
               {/* Left Column: Narrative & Focus Pillars */}
               <div className="mn-about-narrative-col">
                 <p className="mn-about-lead">
-                  I am an Informatics student specializing in Data Science at Universitas Muhammadiyah Malang. I specialize in structuring complex transactional data into verifiable analytical models, from exploratory hypothesis testing to statistical classification, SQL data modeling, and automated ETL pipelines.
+                  I am an Informatics graduate specializing in Data Science from Universitas Muhammadiyah Malang. I specialize in structuring complex transactional data into verifiable analytical models, from exploratory hypothesis testing to statistical classification, SQL data modeling, and automated ETL/ELT pipelines.
                 </p>
 
                 <p className="mn-about-body">
@@ -341,7 +370,7 @@ export default function PortfolioHub() {
                       </svg>
                     </span>
                     <div>
-                      <strong>Automated ETL &amp; Integration:</strong> Python workflows consolidating multi-channel transactions without manual re-entry.
+                      <strong>Automated ETL/ELT &amp; Integration:</strong> Python workflows consolidating multi-channel transactions without manual re-entry.
                     </div>
                   </div>
 
@@ -374,15 +403,15 @@ export default function PortfolioHub() {
                 <div className="mn-impact-card">
                   <div className="mn-impact-badge">Core Stack</div>
                   <div className="mn-impact-stat">Python &amp; SQL</div>
-                  <div className="mn-impact-title">Analysis &amp; ETL Pipelines</div>
+                  <div className="mn-impact-title">Analysis, ETL &amp; ELT Pipelines</div>
                   <p className="mn-impact-desc">
-                    Specialized in data manipulation with Pandas, automated batch ETL scripting, database schema querying, and Looker Studio decision dashboards.
+                    Specialized in data manipulation with Pandas, automated batch ETL/ELT scripting, database schema querying, and Looker Studio decision dashboards.
                   </p>
                 </div>
 
                 <div className="mn-impact-card">
                   <div className="mn-impact-badge">Track Record</div>
-                  <div className="mn-impact-stat">10+ Projects</div>
+                  <div className="mn-impact-stat">{ALL_CASES.length > 0 ? `${ALL_CASES.length} ${ALL_CASES.length === 1 ? 'Project' : 'Projects'}` : 'Curating'}</div>
                   <div className="mn-impact-title">Practical Systems Built</div>
                   <p className="mn-impact-desc">
                     Engineered operational solutions across factory demand forecasting, multi-channel data consolidation, warehouse reconciliations, and machine learning research models.
@@ -403,7 +432,7 @@ export default function PortfolioHub() {
                 <div className="mn-section-kicker">Projects.</div>
                 <h2 className="mn-section-title-large">Featured Projects.</h2>
                 <p className="mn-section-desc">
-                  A curated collection of corporate data engineering pipelines, internal analytics systems, and university machine learning research projects.
+                  Operational data pipelines, internal analytics applications, and applied machine learning research.
                 </p>
               </div>
 
@@ -435,58 +464,80 @@ export default function PortfolioHub() {
                 >
                   Web &amp; Analytics ({WEB_SYSTEMS.length})
                 </button>
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={projectFilter === 'academic'}
-                  onClick={() => setProjectFilter('academic')}
-                  className={`mn-filter-btn ${projectFilter === 'academic' ? 'active' : ''}`}
-                >
-                  Machine Learning &amp; AI ({ACADEMIC_SYSTEMS.length})
-                </button>
+                {ACADEMIC_SYSTEMS.length > 0 && (
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={projectFilter === 'academic'}
+                    onClick={() => setProjectFilter('academic')}
+                    className={`mn-filter-btn ${projectFilter === 'academic' ? 'active' : ''}`}
+                  >
+                    Machine Learning &amp; AI ({ACADEMIC_SYSTEMS.length})
+                  </button>
+                )}
               </div>
             </div>
 
-            {/* High-Craft Architectural Showcase Cards */}
+            {/* Project showcase cards or empty state */}
+            {filteredProjects.length === 0 ? (
+              <div className="mn-projects-empty">
+                <p className="mn-projects-empty-title">
+                  {ALL_CASES.length === 0
+                    ? 'No projects published yet.'
+                    : 'No projects in this category yet.'}
+                </p>
+                <p className="mn-projects-empty-desc">
+                  {ALL_CASES.length === 0
+                    ? 'Project case studies are being rebuilt one by one from verified source repositories.'
+                    : 'Select All to view the available projects.'}
+                </p>
+                {projectFilter !== 'all' && ALL_CASES.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setProjectFilter('all')}
+                    className="mn-btn-secondary"
+                  >
+                    Show All Projects
+                  </button>
+                )}
+              </div>
+            ) : (
             <div className="mn-projects-grid">
-              {filteredProjects.map((item) => {
-                const caseHref = `/projects/${item.id}`;
+              {filteredProjects.map((item, idx) => {
+                const displayCode = String(idx + 1).padStart(2, '0');
                 const badgeLabel =
                   item.groupType === 'python'
                     ? 'Python Pipeline'
                     : item.groupType === 'web'
                     ? 'Web & Analytics'
                     : 'Machine Learning & AI';
-                const challengeLabel =
-                  item.groupType === 'academic'
-                    ? 'Research & Engineering Challenge'
-                    : 'Operational Challenge';
 
                 return (
                   <article key={item.id} className="mn-project-card">
-                    <div>
+                    <div className="mn-card-main">
                       <div className="mn-card-header">
                         <div className="mn-card-tags">
-                          <span className="mn-badge-code">{item.code}</span>
+                          <span className="mn-badge-code">{displayCode}</span>
                           <span className="mn-badge-cat">{badgeLabel}</span>
+                          <span className="mn-card-entity">&bull; {item.division || item.entity}</span>
                         </div>
-                        <span className="mn-card-entity">{item.division || item.entity}</span>
+                        {item.date && <span className="mn-badge-date">{item.date}</span>}
                       </div>
 
                       <h3 className="mn-card-title">
-                        <a href={caseHref} className="mn-card-title-link">
+                        <button
+                          type="button"
+                          onClick={() => setSelectedProjectId(item.id)}
+                          className="mn-card-title-btn"
+                        >
                           {item.title}
-                        </a>
+                        </button>
                       </h3>
 
                       <p className="mn-card-subtitle">{item.subtitle}</p>
+                    </div>
 
-                      <div className="mn-card-problem">
-                        <span className="mn-problem-kicker">{challengeLabel}</span>
-                        <p>{item.problemStatement}</p>
-                      </div>
-
-                      {/* Key Project Scale Metrics */}
+                    <div className="mn-card-bottom">
                       {item.metrics && item.metrics.length > 0 && (
                         <div className="mn-card-metrics-row">
                           {item.metrics.slice(0, 3).map((m) => (
@@ -498,26 +549,18 @@ export default function PortfolioHub() {
                         </div>
                       )}
 
-                      <div className="mn-card-stack">
-                        {item.stack.slice(0, 5).map((stk) => (
-                          <span key={stk} className="mn-stack-tag">
-                            {stk}
-                          </span>
-                        ))}
-                        {item.stack.length > 5 && (
-                          <span className="mn-stack-tag-more">+{item.stack.length - 5} more</span>
-                        )}
-                      </div>
-                    </div>
+                      <div className="mn-card-footer">
+                        <div className="mn-card-stack">
+                          {item.stack.slice(0, 3).map((stk) => (
+                            <span key={stk} className="mn-stack-tag">
+                              {stk}
+                            </span>
+                          ))}
+                          {item.stack.length > 3 && (
+                            <span className="mn-stack-tag-more">+{item.stack.length - 3}</span>
+                          )}
+                        </div>
 
-                    <div className="mn-card-footer">
-                      <a href={caseHref} className="mn-card-action">
-                        <span>Explore Technical Workflow &amp; Logic</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                          <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                      </a>
-                      {(item.githubUrl || item.liveUrl) && (
                         <div className="mn-card-ext-actions">
                           {item.githubUrl && (
                             <a
@@ -535,6 +578,21 @@ export default function PortfolioHub() {
                               <span>GitHub</span>
                             </a>
                           )}
+                          {item.eprintsUrl && (
+                            <a
+                              href={item.eprintsUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mn-card-icon-action"
+                              title="View Thesis on UMM E-Repository"
+                              aria-label={`View ${item.title} thesis on UMM E-Repository`}
+                            >
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                              </svg>
+                              <span>Thesis</span>
+                            </a>
+                          )}
                           {item.liveUrl && (
                             <a
                               href={item.liveUrl}
@@ -548,13 +606,21 @@ export default function PortfolioHub() {
                               <span>Live App</span>
                             </a>
                           )}
+                          <button
+                            type="button"
+                            onClick={() => setSelectedProjectId(item.id)}
+                            className="mn-card-action-pill"
+                          >
+                            Details
+                          </button>
                         </div>
-                      )}
+                      </div>
                     </div>
                   </article>
                 );
               })}
             </div>
+            )}
           </div>
         </section>
 
@@ -864,6 +930,182 @@ export default function PortfolioHub() {
         </section>
       </main>
 
+      {/* Project detail slide-over drawer */}
+      {selectedProject && (
+        <div
+          className="mn-drawer-backdrop"
+          onClick={() => setSelectedProjectId(null)}
+          role="presentation"
+        >
+          <div
+            className="mn-drawer-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-drawer-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mn-drawer-header">
+              <div className="mn-drawer-meta">
+                <span className="mn-badge-code">
+                  {String(selectedIndex + 1).padStart(2, '0')}
+                </span>
+                <span className="mn-badge-cat">
+                  {selectedProject.groupType === 'python'
+                    ? 'Python Pipeline'
+                    : selectedProject.groupType === 'web'
+                    ? 'Web & Analytics'
+                    : 'Machine Learning & AI'}
+                </span>
+                {selectedProject.date && (
+                  <span className="mn-badge-date">{selectedProject.date}</span>
+                )}
+              </div>
+              <button
+                type="button"
+                className="mn-drawer-close"
+                onClick={() => setSelectedProjectId(null)}
+                aria-label="Close project details"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="mn-drawer-body">
+              <div className="mn-drawer-entity">
+                {selectedProject.entity} &bull; {selectedProject.division}
+              </div>
+              <h2 id="project-drawer-title" className="mn-drawer-title">
+                {selectedProject.title}
+              </h2>
+              <p className="mn-drawer-subtitle">{selectedProject.subtitle}</p>
+
+              {(selectedProject.githubUrl || selectedProject.eprintsUrl || selectedProject.liveUrl) && (
+                <div className="mn-drawer-links">
+                  {selectedProject.githubUrl && (
+                    <a
+                      href={selectedProject.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mn-card-icon-action"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                        <path d="M9 18c-4.51 2-5-2-7-2" />
+                      </svg>
+                      <span>GitHub Repository</span>
+                    </a>
+                  )}
+                  {selectedProject.eprintsUrl && (
+                    <a
+                      href={selectedProject.eprintsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mn-card-icon-action"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                      </svg>
+                      <span>UMM E-Repository (Skripsi)</span>
+                    </a>
+                  )}
+                  {selectedProject.liveUrl && (
+                    <a
+                      href={selectedProject.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mn-card-icon-action mn-card-live-pill"
+                    >
+                      <span className="mn-live-indicator-dot" aria-hidden="true" />
+                      <span>Open Live App</span>
+                    </a>
+                  )}
+                </div>
+              )}
+
+              {selectedProject.metrics && selectedProject.metrics.length > 0 && (
+                <div className="mn-drawer-metrics">
+                  {selectedProject.metrics.map((m) => (
+                    <div key={m.label} className="mn-drawer-metric-box">
+                      <span className="mn-drawer-metric-lbl">{m.label}</span>
+                      <span className="mn-drawer-metric-val">{m.value}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <div className="mn-drawer-section">
+                <h3 className="mn-drawer-section-title">The Challenge</h3>
+                <p className="mn-drawer-text">{selectedProject.problemStatement}</p>
+              </div>
+
+              {selectedProject.workflowSteps && selectedProject.workflowSteps.length > 0 && (
+                <div className="mn-drawer-section">
+                  <h3 className="mn-drawer-section-title">How It Works</h3>
+                  <ol className="mn-drawer-steps">
+                    {selectedProject.workflowSteps.map((ws) => (
+                      <li key={ws.step} className="mn-drawer-step-item">
+                        <strong className="mn-drawer-step-head">
+                          {ws.step.replace(/^\d+\.\s*/, '')}
+                        </strong>
+                        <p className="mn-drawer-step-desc">{ws.detail}</p>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+
+              {selectedProject.technicalRules && selectedProject.technicalRules.length > 0 && (
+                <div className="mn-drawer-section">
+                  <h3 className="mn-drawer-section-title">Key Logic</h3>
+                  {selectedProject.technicalRules.map((rule) => (
+                    <div key={rule.title} className="mn-drawer-rule-box">
+                      <div className="mn-drawer-rule-title">{rule.title}</div>
+                      <code className="mn-drawer-rule-formula">{rule.formula}</code>
+                      <p className="mn-drawer-rule-exp">{rule.explanation}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <div className="mn-drawer-section">
+                <h3 className="mn-drawer-section-title">Tools &amp; Stack</h3>
+                <div className="mn-card-stack" style={{ marginBottom: 0 }}>
+                  {selectedProject.stack.map((stk) => (
+                    <span key={stk} className="mn-stack-tag">
+                      {stk}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="mn-drawer-footer">
+              <button
+                type="button"
+                className="mn-drawer-nav-btn"
+                disabled={!prevProject}
+                onClick={() => prevProject && setSelectedProjectId(prevProject.id)}
+              >
+                &larr; Prev
+              </button>
+              <span className="mn-drawer-counter">
+                {String(selectedIndex + 1).padStart(2, '0')} / {String(filteredProjects.length).padStart(2, '0')}
+              </span>
+              <button
+                type="button"
+                className="mn-drawer-nav-btn"
+                disabled={!nextProject}
+                onClick={() => nextProject && setSelectedProjectId(nextProject.id)}
+              >
+                Next &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* FOOTER */}
       <footer className="mn-footer">
         <div className="mn-container mn-footer-flex">
@@ -879,6 +1121,57 @@ export default function PortfolioHub() {
           </div>
         </div>
       </footer>
+
+      {/* Mobile bottom contact bar for quick HR access */}
+      <nav className="mn-mobile-bar" aria-label="Quick Contact">
+        <a
+          href={PROFILE_DATA.whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mn-mobile-bar-item"
+        >
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+          </svg>
+          <span>WhatsApp</span>
+        </a>
+        <a
+          href={`mailto:${PROFILE_DATA.email}`}
+          className="mn-mobile-bar-item"
+        >
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect width="20" height="16" x="2" y="4" rx="2" />
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+          </svg>
+          <span>Email</span>
+        </a>
+        <a
+          href={PROFILE_DATA.linkedinUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mn-mobile-bar-item"
+        >
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+            <rect width="4" height="12" x="2" y="9" />
+            <circle cx="4" cy="4" r="2" />
+          </svg>
+          <span>LinkedIn</span>
+        </a>
+        <a
+          href={PROFILE_DATA.cvPdfUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mn-mobile-bar-item mn-mobile-bar-cta"
+        >
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" x2="12" y1="15" y2="3" />
+          </svg>
+          <span>Resume</span>
+        </a>
+      </nav>
     </div>
   );
 }

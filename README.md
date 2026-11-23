@@ -18,8 +18,7 @@ Built with **Next.js** (App Router, static export for GitHub Pages) to showcase 
 ## Project Structure
 
 - `src/app/page.js`: Home page rendering `PortfolioHub`.
-- `src/app/projects/[id]/page.js`: Static-generated detail page for each project case study.
-- `src/components/PortfolioHub.js`: Main portfolio layout, category filter, experience timeline, skills, and contact section.
+- `src/components/PortfolioHub.js`: Main portfolio layout, category filter, slide-over project detail drawer, experience timeline, skills, and contact section.
 - `src/lib/pythonSystemsData.js`: Structured dataset for all projects and profile details.
 - `public/profile/`: Hero sketch image and downloadable CV PDF.
 
