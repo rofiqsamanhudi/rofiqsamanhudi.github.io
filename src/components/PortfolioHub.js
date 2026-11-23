@@ -19,6 +19,14 @@ export default function PortfolioHub() {
   const [contactInView, setContactInView] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
 
+  // Filter projects by category: all, python, web, academic
+  const filteredProjects = ALL_CASES.filter((p) => {
+    if (projectFilter === 'python') return p.groupType === 'python';
+    if (projectFilter === 'web') return p.groupType === 'web';
+    if (projectFilter === 'academic') return p.groupType === 'academic';
+    return true;
+  });
+
   const selectedIndex = selectedProjectId
     ? filteredProjects.findIndex((p) => p.id === selectedProjectId)
     : -1;
@@ -46,14 +54,6 @@ export default function PortfolioHub() {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [selectedProject]);
-
-  // Filter projects by category: all, python, web, academic
-  const filteredProjects = ALL_CASES.filter((p) => {
-    if (projectFilter === 'python') return p.groupType === 'python';
-    if (projectFilter === 'web') return p.groupType === 'web';
-    if (projectFilter === 'academic') return p.groupType === 'academic';
-    return true;
-  });
 
   // Observer to smoothly slide out floating dock when Contact section is in view
   useEffect(() => {
