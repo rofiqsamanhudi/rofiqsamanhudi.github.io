@@ -35,7 +35,7 @@ Built with **Next.js** (App Router, static export for GitHub Pages) to present d
 - **LinkedIn**: [linkedin.com/in/rofiqsamanhudi](https://www.linkedin.com/in/rofiqsamanhudi/)
 - **GitHub**: [github.com/rofiqsamanhudi](https://github.com/rofiqsamanhudi)
 - **Instagram**: [instagram.com/rofiqsamanhudi_](https://www.instagram.com/rofiqsamanhudi_/)
-- **Curriculum Vitae (PDF)**: `/profile/CV-Rofiq-Samanhudi-Research-and-Data-Analyst.pdf`
+- **Curriculum Vitae (PDF)**: `/profile/CV-Rofiq-Samanhudi.pdf`
 
 ## Project Structure
 

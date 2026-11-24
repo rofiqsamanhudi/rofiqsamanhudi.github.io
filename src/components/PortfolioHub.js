@@ -330,7 +330,7 @@ export default function PortfolioHub() {
             <div className="mn-hero-visual-col">
               <div className="mn-hero-sketch-frame">
                 <img
-                  src="/profile/rofiq-sketch-clean.jpg"
+                  src="/profile/rofiq-sketch.jpg"
                   alt="Rofiq Samanhudi - Hand-drawn graphite pencil portrait"
                   width="764"
                   height="1024"

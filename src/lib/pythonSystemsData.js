@@ -765,7 +765,7 @@ export const PROFILE_DATA = {
   linkedinHandle: 'linkedin.com/in/rofiqsamanhudi',
   instagramUrl: 'https://www.instagram.com/rofiqsamanhudi_/',
   instagramHandle: '@rofiqsamanhudi_',
-  cvPdfUrl: '/profile/CV-Rofiq-Samanhudi-Research-and-Data-Analyst.pdf',
+  cvPdfUrl: '/profile/CV-Rofiq-Samanhudi.pdf',
   summary:
     'Informatics graduate specializing in Data Science from Universitas Muhammadiyah Malang (GPA 3.82 / 4.00). Bridges quantitative research rigor with practical data engineering, from statistical classification and hypothesis testing to automated Python ETL/ELT pipelines, SQL data modeling, and executive Looker Studio dashboards. Proven track record in multi-channel e-commerce data consolidation, demand forecasting, and operational reconciliation.',
   skillGroups: [
